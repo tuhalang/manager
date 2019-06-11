@@ -28,6 +28,8 @@ public class Lesson implements Serializable {
     private int lessonId;
     @Column(name = "lesson_name")
     private String lessonName;
+    @Column(name = "content")
+    private String content;
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
@@ -51,6 +53,14 @@ public class Lesson implements Serializable {
 
     public void setLessonName(String lessonName) {
         this.lessonName = lessonName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getDate() {

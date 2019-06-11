@@ -19,8 +19,28 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course> getAll(int start, int max) {
+        return courseDAO.getAll(start,max);
+    }
+
+    @Override
+    public long getTotal() {
+        return courseDAO.getTotal();
+    }
+
+    @Override
     public List<Course> getByType(int typeId) {
         return courseDAO.getByType(typeId);
+    }
+
+    @Override
+    public List<Course> getByType(int typeId, int start, int max) {
+        return courseDAO.getByType(typeId, start, max);
+    }
+
+    @Override
+    public long getTotalByType(int typeId) {
+        return courseDAO.getTotalByType(typeId);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class LoginController {
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpSession session, SessionStatus status) {
         status.setComplete();
-        return "home";
+        return "index";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)

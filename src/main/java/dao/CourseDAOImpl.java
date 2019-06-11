@@ -41,6 +41,36 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Transactional
     @Override
+    public List<Course> getAll(int start, int max) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            String hql = "from Course";
+            Query<Course> query = session.createQuery(hql);
+            List<Course> listCourse = query.setFirstResult(start).setMaxResults(max).getResultList();
+            return listCourse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Transactional
+    @Override
+    public long getTotal() {
+        try{
+            Session session = sessionFactory.getCurrentSession();
+            String hql = "select count(1) from Course";
+            Query<Long> query = session.createQuery(hql);
+            long total = query.getSingleResult();
+            return total;
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Transactional
+    @Override
     public List<Course> getByType(int typeId) {
         try {
             Session session = sessionFactory.getCurrentSession();
@@ -54,6 +84,38 @@ public class CourseDAOImpl implements CourseDAO {
             return null;
         }
 
+    }
+
+    @Transactional
+    @Override
+    public List<Course> getByType(int typeId, int start, int max) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            String hql = "from Course where course_type_id= :type_id";
+            Query<Course> query = session.createQuery(hql);
+            query.setParameter("type_id", typeId);
+            List<Course> listCourse = query.setFirstResult(start).setMaxResults(max).getResultList();
+            return listCourse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Transactional
+    @Override
+    public long getTotalByType(int typeId) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            String hql = "select count(1) from Course where courseType.id=:type_id";
+            Query<Long> query = session.createQuery(hql);
+            query.setParameter("type_id", typeId);
+            long total = query.getSingleResult();
+            return total;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     @Transactional

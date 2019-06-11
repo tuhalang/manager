@@ -97,7 +97,7 @@
 <script type="text/javascript"
         src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
 <script type="text/javascript"
-        src="<c:url value='/resources/js/custom_teacher.js'/>"></script>
+        src="<c:url value='/resources1/js/custom_teacher.js'/>"></script>
 </body>
 
 </html>

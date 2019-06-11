@@ -60,7 +60,7 @@ public class CourseDetailController {
 
             return "course_detail";
         }
-        return "home";
+        return "index";
     }
 
     @RequestMapping(value = "upload", method = RequestMethod.POST)

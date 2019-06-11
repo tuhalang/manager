@@ -2,42 +2,100 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <title>WebUni - Education Template</title>
     <meta charset="UTF-8">
-    <title>Teacher</title>
-    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css'/>">
+    <meta name="description" content="WebUni Education Template">
+    <meta name="keywords" content="webuni, education, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="<c:url value='/resources/img/favicon.ico'/>" rel="shortcut icon"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i"
+          rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/font-awesome.min.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/owl.carousel.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
+
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-
 <body>
-<h1><a href="logout">Logout</a></h1>
-<h4>The courses are teaching</h4>
-<a href="new_course">New Course</a>
-<table class="table">
-    <tr class="rows">
-        <th>Id</th>
-        <th>Name</th>
-        <th>Num Of Lesson</th>
-        <th>Fee</th>
-        <th>Promotion</th>
-        <th>Type</th>
-    </tr>
-    <c:forEach items="${courses}" var="course">
-        <tr class="rows">
-            <td>${course.getCourseId()}</td>
-            <td>${course.getCourseName()}</td>
-            <td>${course.getNumOfLesson()}</td>
-            <td>${course.getFee()}</td>
-            <td>${course.getPromotion() }</td>
-            <td>${course.getCourseType().getType()}</td>
-            <td><a href="edit_course?id=${course.getCourseId()}">edit</a></td>
-        </tr>
-    </c:forEach>
-</table>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.min.js'/>"></script>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
-<script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
-</body>
+<!-- Header section -->
+<header class="header-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
 
+                <div class="site-logo">
+                    <img src="<c:url value='/resources/img/logo.png'/>" alt="">
+                </div>
+
+                <div class="nav-switch">
+                    <i class="fa fa-bars"></i>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-9">
+
+                <a href="logout" class="site-btn header-btn">Logout</a>
+
+                <nav class="main-menu">
+                    <ul>
+                        <li><a href="home">Home</a></li>
+                        <li><a href="">Courses</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+
+        </div>
+    </div>
+</header>
+<!-- Header section end -->
+
+
+<!-- Hero section -->
+<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg.jpg'/>">
+    <div class="container">
+        sadasda
+    </div>
+</section>
+<!-- Hero section end -->
+
+<!-- footer section -->
+<footer class="">
+    <div class="footer-bottom">
+        <div class="footer-warp">
+            <div class="copyright">
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                    href="https://facebook.com/hungpv99" target="_blank">Pham Hung</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer section end -->
+
+<!--====== Javascripts & Jquery ======-->
+<script src="<c:url value='/resources/js/jquery-3.2.1.min.js'/>"></script>
+<script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/resources/js/mixitup.min.js'/>"></script>
+<script src="<c:url value='/resources/js/circle-progress.min.js'/>"></script>
+<script src="<c:url value='/resources/js/owl.carousel.min.js'/>"></script>
+<script src="<c:url value='/resources/js/main.js'/>"></script>
 </html>

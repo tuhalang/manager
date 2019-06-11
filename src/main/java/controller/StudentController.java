@@ -16,7 +16,7 @@ public class StudentController {
         if (user != null && user.getUserType().getType().equalsIgnoreCase("student")) {
             return "student";
         }
-        return "home";
+        return "index";
     }
 
 

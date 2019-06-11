@@ -39,7 +39,7 @@ public class TeacherController {
             map.addAttribute("courses", user.getListCourses());
             return "teacher";
         }
-        return "home";
+        return "index";
     }
 
     @RequestMapping(value = "new_course", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class TeacherController {
             modelAndView.addObject("courseTypes", listCourseTypes);
             return modelAndView;
         }
-        return new ModelAndView("home");
+        return new ModelAndView("index");
     }
 
     @RequestMapping(value = "add_course", method = RequestMethod.POST)
@@ -67,7 +67,7 @@ public class TeacherController {
             userService.update(user);
             return "redirect:teacher";
         } else {
-            return "home";
+            return "index";
         }
 
     }
@@ -83,7 +83,7 @@ public class TeacherController {
 
             return modelAndView;
         }
-        return new ModelAndView("home");
+        return new ModelAndView("index");
     }
 
     @RequestMapping(value = "update_course", method = RequestMethod.POST)
@@ -103,10 +103,10 @@ public class TeacherController {
                 model.addAttribute("error", "Can't update, please try again !!!");
                 return "redirect:edit_course?id=" + course.getCourseId();
             } else {
-                return "home";
+                return "index";
             }
         }
-        return "home";
+        return "index";
     }
 
 
