@@ -25,7 +25,11 @@
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 
 
-
+    <style>
+        a{
+            color: yellow;
+        }
+    </style>
 
 
 </head>
@@ -52,7 +56,7 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="logout" class="site-btn header-btn">Đăng xuất</a>
+                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
 
                 <nav class="main-menu">
                     <ul>
@@ -71,8 +75,8 @@
 
 
 <!-- Hero section -->
-<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg.jpg'/>">
-    <div class="container" style="color: white; padding-top: 150px">
+<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
+    <div class="container" style="color: black; padding-top: 150px">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row" style="display: block; margin-bottom: 30px;">

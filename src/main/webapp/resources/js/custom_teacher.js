@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('#lesson').change(function (event) {
         var lessonId = $(this).val();
         if (lessonId != 'NONE') {
+            loadInfoCourse(lessonId);
             loadStudentsOfCourse(lessonId);
         } else {
             alert("You haven't choose lesson!")
@@ -12,6 +13,26 @@ $(document).ready(function () {
     });
 });
 
+function loadInfoCourse(lessonId) {
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "api/load_info_lessons",
+        data: {
+            lessonId: lessonId
+        },
+        dataType: 'json',
+        timeout: 10000,
+        success: function (data) {
+            $('#name_lesson').text(data['lessonName']);
+            $('#length').text(data['length']);
+            $('#content').text(data['content']);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
 
 function loadLesson(courseId) {
     $.ajax({
@@ -53,12 +74,10 @@ function handleClick(cb) {
             success: function (data) {
                 if (data == "success") {
                     console.log("ok");
-                    alert("New lesson is created!");
                 }
             },
             error: function (e) {
                 console.log("ERROR: ", e);
-                alert("Can't create new lesson");
             }
         });
     }
@@ -98,7 +117,7 @@ function loadStudentsOfCourse(lessonId) {
         timeout: 10000,
         success: function (data) {
             $('#students').empty();
-            var th = '<tr><th>Id</th><th>Name</th><th>Roll up</th></tr>';
+            var th = '<tr><th>Id</th><th>Họ tên</th><th>Điểm danh</th></tr>';
             $('#students').append(th);
             $.each(data, function (index, student) {
                 var tr = '<tr class="rows">'
@@ -113,40 +132,6 @@ function loadStudentsOfCourse(lessonId) {
             console.log("ERROR: ", e);
         }
     });
-}
-
-function newLesson() {
-    var lessonName = $('#lessonName').val();
-    var courseId = getUrlParameter("id");
-    var length = $('#length').val();
-    if (lessonName !== "") {
-        $.ajax({
-            type: "GET",
-            contentType: "application/json",
-            url: "api/new_lesson",
-            data: {
-                courseId: courseId,
-                lessonName: lessonName,
-                length: length
-            },
-            dataType: 'text',
-            timeout: 10000,
-            success: function (data) {
-                if (data == "success") {
-                    alert("A new lesson is added!")
-                    $.each(data, function (val, text) {
-                        $('#lesson').append(
-                            new Option(text['lessonName'], text['lessonId']));
-                    });
-                }
-            },
-            error: function (e) {
-                console.log("ERROR: ", e);
-            }
-        });
-    } else {
-        alert("Please enter name of lesson!")
-    }
 }
 
 

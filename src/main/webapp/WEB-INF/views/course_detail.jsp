@@ -25,7 +25,11 @@
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 
 
-
+    <style>
+        a{
+            color: yellow;
+        }
+    </style>
 
 
 </head>
@@ -56,9 +60,9 @@
 
                 <nav class="main-menu">
                     <ul>
-                        <li><a style="color: red" href="admin">KHÓA HỌC</a></li>
-                        <li><a  href="admin/teacher">GIÁO VIÊN</a></li>
-                        <li><a href="admin/student">HỌC VIÊN</a></li>
+                        <li><a style="color: red" href="${pageContext.request.contextPath}/admin">KHÓA HỌC</a></li>
+                        <li><a  href="${pageContext.request.contextPath}/admin/teacher">GIÁO VIÊN</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/student">HỌC VIÊN</a></li>
                     </ul>
                 </nav>
 
@@ -69,7 +73,7 @@
 </header>
 <!-- Header section end -->
 
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg.jpg'/>" style="padding-top: 150px; color: white">
+<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>" style="padding-top: 150px; color: white">
     <div class="course_info" style="padding-left: 50px">
         <div class="rows">
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
@@ -85,7 +89,7 @@
                     <tr class="row"><td>Khuyến mãi:</td> <td> ${course.getPromotion()}</td></tr>
                     <tr class="row"><td>Loại:</td> <td> ${course.getCourseType().getType()}</td></tr>
                     <tr class="row"><td>Số lượng học viên:</td> <td> ${course.getListUsers().size()-1}</td></tr>
-                    <form method="post" action="upload?id=${course.getCourseId()}" enctype="multipart/form-data">
+                    <form method="post" action="${pageContext.request.contextPath}/upload?id=${course.getCourseId()}" enctype="multipart/form-data">
                         <tr class="row">
                             <td><input type="file" name="file"/></td>
                             <td><input style="color: black" type="submit" value="Add Student"/></td>

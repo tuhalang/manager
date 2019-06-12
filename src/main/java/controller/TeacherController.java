@@ -1,24 +1,27 @@
 package controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Course;
 import entities.CourseType;
+import entities.Lesson;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import service.CourseService;
 import service.CourseTypeService;
+import service.LessonService;
 import service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class TeacherController {
@@ -31,6 +34,9 @@ public class TeacherController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    LessonService lessonService;
 
     @RequestMapping(value = "teacher", method = RequestMethod.GET)
     public String Default(HttpSession httpSession, ModelMap map) {
@@ -55,6 +61,61 @@ public class TeacherController {
         }
         return new ModelAndView("index");
     }
+
+    @PostMapping(value = "api/save_course")
+    @ResponseBody
+    public Course submitNewCourse(HttpSession httpSession, @ModelAttribute Course course, BindingResult result){
+
+        if(!result.hasErrors()){
+            User user = (User) httpSession.getAttribute("user");
+            Set<User> users = new HashSet<>();
+            users.add(user);
+            course.setListUsers(users);
+            if(courseService.save(course)){
+                System.out.println("ok");
+                return course;
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "api/save_lesson", method = RequestMethod.GET)
+    @ResponseBody
+    public Lesson submitNewLesson(HttpServletRequest request){
+
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        String nameLesson = request.getParameter("nameLesson");
+        String contentLesson = request.getParameter("contentLesson");
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateLesson"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int lengthLesson = Integer.parseInt(request.getParameter("lengthLesson"));
+
+        System.out.println(courseId);
+        System.out.println(nameLesson);
+        System.out.println(contentLesson);
+        System.out.println(request.getParameter("dateLesson"));
+        System.out.println(date);
+
+        Course course = courseService.getById(courseId);
+        Set<Lesson> listLessons = course.getListLessons();
+        Lesson lesson = new Lesson();
+        lesson.setCourse(course);
+        lesson.setLessonName(nameLesson);
+        lesson.setDate(date);
+        lesson.setLength(lengthLesson);
+        lesson.setContent(contentLesson);
+
+        lessonService.save(lesson);
+        listLessons.add(lesson);
+        course.setListLessons(listLessons);
+        courseService.update(course);
+        return lesson;
+    }
+
 
     @RequestMapping(value = "add_course", method = RequestMethod.POST)
     public String submit(@ModelAttribute("course") Course course, BindingResult result, HttpSession httpSession) {
@@ -107,6 +168,89 @@ public class TeacherController {
             }
         }
         return "index";
+    }
+
+    @RequestMapping(value = "api/load_lessons", method = RequestMethod.GET)
+    @ResponseBody
+    public String loadLessons(HttpServletRequest request) {
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        Course course = courseService.getById(courseId);
+        ObjectMapper mapper = new ObjectMapper();
+        String ajaxResponse = "";
+        try {
+            ajaxResponse = mapper.writeValueAsString(course.getListLessons());
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return ajaxResponse;
+    }
+
+
+    @RequestMapping(value = "api/load_students_of_lesson", method = RequestMethod.GET)
+    @ResponseBody
+    public String loadStudentOfLesson(HttpServletRequest request) {
+        int lessonId = Integer.parseInt(request.getParameter("lessonId"));
+        Lesson lesson = lessonService.getById(lessonId);
+        Course course = lesson.getCourse();
+        ObjectMapper mapper = new ObjectMapper();
+        String ajaxResponse = "";
+        try {
+            ajaxResponse = mapper.writeValueAsString(lesson.getListUsers());
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return ajaxResponse;
+    }
+
+    @RequestMapping(value = "api/load_students_of_course", method = RequestMethod.GET)
+    @ResponseBody
+    public String loadStudentOfCourse(HttpServletRequest request) {
+        int lessonId = Integer.parseInt(request.getParameter("lessonId"));
+        Lesson lesson = lessonService.getById(lessonId);
+        Course course = lesson.getCourse();
+        ObjectMapper mapper = new ObjectMapper();
+        List<User> listUsres = new ArrayList<>();
+        for (User user : course.getListUsers()) {
+            if (user.getUserType().getType().equalsIgnoreCase("student")) {
+                listUsres.add(user);
+            }
+        }
+        String ajaxResponse = "";
+        try {
+            ajaxResponse = mapper.writeValueAsString(listUsres);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return ajaxResponse;
+    }
+
+    @RequestMapping(value = "api/roll_up", method = RequestMethod.GET)
+    @ResponseBody
+    public String roll_up(HttpServletRequest request) {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int lessonId = Integer.parseInt(request.getParameter("lessonId"));
+        Lesson lesson = lessonService.getById(lessonId);
+        User user = userService.getUserById(userId);
+        Set<User> listUser = lesson.getListUsers();
+        listUser.add(user);
+        lesson.setListUsers(listUser);
+        lessonService.update(lesson);
+        return "success";
+    }
+
+    @RequestMapping(value = "api/load_info_lessons", method = RequestMethod.GET)
+    @ResponseBody
+    public String loadInfoLesson(HttpServletRequest request) {
+        int lessonId = Integer.parseInt(request.getParameter("lessonId"));
+        Lesson lesson = lessonService.getById(lessonId);
+        ObjectMapper mapper = new ObjectMapper();
+        String ajaxResponse = "";
+        try {
+            ajaxResponse = mapper.writeValueAsString(lesson);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return ajaxResponse;
     }
 
 

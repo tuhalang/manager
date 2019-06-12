@@ -70,7 +70,7 @@
 
 
 <!-- Hero section -->
-<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg.jpg'/>">
+<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
     <div class="container">
         sadasda
     </div>

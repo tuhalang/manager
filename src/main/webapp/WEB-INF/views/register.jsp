@@ -25,7 +25,7 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form:form method="POST" class="register-form" id="register-form" modelAttribute="user" action="submit-register">
+                        <form:form method="POST" class="register-form" id="register-form" modelAttribute="user" action="${pageContext.request.contextPath}/submit-register">
                             <div class="form-group">
                                 <form:label path="fullname" for="name"><i class="zmdi zmdi-account material-icons-name"></i></form:label>
                                 <form:input path="fullname" type="text" name="name" id="name" placeholder="Your Name"/>

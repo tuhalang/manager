@@ -24,7 +24,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 
-
+    <style>
+        a{
+            color: yellow;
+        }
+    </style>
 
 
 
@@ -52,7 +56,7 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="logout" class="site-btn header-btn">Đăng xuất</a>
+                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
 
                 <nav class="main-menu">
                     <ul>
@@ -69,7 +73,7 @@
 </header>
 <!-- Header section end -->
 
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg.jpg'/>" style="padding-top: 150px; color: white">
+<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>" style="padding-top: 150px; color: black">
     <div class="container">
         <table class="table" style="margin-top: 100px">
             <tr class="row" style="font-weight: bold">
@@ -85,7 +89,7 @@
                     <td>${student.totalTime()}</td>
                     <td>
                         <c:forEach items="${student.getListCourses()}" var="course">
-                            <a href="course_detail?id=${course.getCourseId()}">${course.getCourseName()}</a>,
+                            <a href="${pageContext.request.contextPath}/course_detail?id=${course.getCourseId()}">${course.getCourseName()}</a>,
                         </c:forEach>
                     </td>
                 </tr>
