@@ -182,4 +182,28 @@ public class Course implements Serializable {
     }
 
 
+    public User getTeacher(){
+        for (User user : listUsers){
+            if(user.getUserType().getType().equalsIgnoreCase("teacher")){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString(){
+        String jsonObj = "{\"courseId\":\""+courseId+"\","+
+                "\"courseName\":\""+courseName+"\","+
+                "\"teacher\":\""+getTeacher().getFullname()+"\","+
+                "\"startDate\":\""+startDate+"\","+
+                "\"endDate\":\""+endDate+"\","+
+                "\"numOfLesson\":"+numOfLesson+","+
+                "\"lessons\":"+listLessons+","+
+                "\"fee\":"+fee+""+
+                "}";
+        return jsonObj;
+    }
+
+
 }

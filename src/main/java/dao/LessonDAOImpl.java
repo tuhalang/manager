@@ -69,7 +69,7 @@ public class LessonDAOImpl implements LessonDAO {
     public List<Lesson> getLessonInWeek(int userId) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            String hql = "SELECT l FROM Lesson l JOIN l.listUsers u where u.userId = :userId " +
+            String hql = "select l from Lesson l join l.course c join c.listUsers u where u.userId= :userId " +
                     "and yearweek(l.date) = yearweek(curdate()) order by l.date";
             Query<Lesson> query = session.createQuery(hql);
             query.setParameter("userId", userId);
@@ -87,7 +87,7 @@ public class LessonDAOImpl implements LessonDAO {
     public List<Lesson> getLessonInMonth(int userId) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            String hql = "SELECT l FROM Lesson l JOIN l.listUsers u where u.userId = :userId " +
+            String hql = "select l from Lesson l join l.course c join c.listUsers u where u.userId= :userId " +
                     "and month(l.date) = month(current_date()) and year(l.date) = year(current_date()) order by l.date";
             Query<Lesson> query = session.createQuery(hql);
             query.setParameter("userId", userId);

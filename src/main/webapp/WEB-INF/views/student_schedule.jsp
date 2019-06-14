@@ -57,7 +57,7 @@
                 <nav class="main-menu">
                     <ul>
                         <li><a href="${pageContext.request.contextPath}/student">HOME</a></li>
-                        <li><a href="${pageContext.request.contextPath}/student/schedule">SCHEDULE</a></li>
+                        <li><a style="color: red" href="${pageContext.request.contextPath}/student/schedule">SCHEDULE</a></li>
                         <li><a href="${pageContext.request.contextPath}/student/course">COURSES</a></li>
                     </ul>
                 </nav>
@@ -74,24 +74,17 @@
 <section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
     <div class="container" style="padding-top: 150px; color: white">
         <div class="row">
+
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                <strong style="margin-right: 20px; font-size: 20px">Courses</strong>
-                <input type="radio" name="type" value="0" id="learned"/> Đã học
-                <input type="radio" name="type" value="1" id="learning" checked="checked"/> Đang học
-                <table class="table" id="courses">
+                <strong style="margin-right: 20px; font-size: 20px">Schedule</strong>
+                <input type="radio" name="time" value="0" id="week"
+                       checked="checked"/> this week <input type="radio" name="time"
+                                                            value="1" id="month"/> this month
+
+                <table class="table" id="schedule">
 
                 </table>
             </div>
-            <%--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">--%>
-            <%--<strong style="margin-right: 20px; font-size: 20px">Schedule</strong>--%>
-            <%--<input type="radio" name="time" value="0" id="week"--%>
-            <%--checked="checked"/> this week <input type="radio" name="time"--%>
-            <%--value="1" id="month"/> this month--%>
-
-            <%--<table class="table" id="schedule">--%>
-
-            <%--</table>--%>
-            <%--</div>--%>
         </div>
     </div>
 </section>
@@ -118,6 +111,6 @@
 <script src="<c:url value='/resources/js/circle-progress.min.js'/>"></script>
 <script src="<c:url value='/resources/js/owl.carousel.min.js'/>"></script>
 <script src="<c:url value='/resources/js/main.js'/>"></script>
-<script src="<c:url value='/resources/js/custom_student.js'/>"></script>
+<script src="<c:url value='/resources/js/custom_student_schedule.js'/>"></script>
 </body>
 </html>

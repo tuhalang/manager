@@ -1,24 +1,18 @@
 $(document).ready(function () {
-    //$("#learning").prop( "checked", true );
-    //$("#week").prop( "checked", true );
 
     loadCourse(1);
-    loadSchedule(0);
 
     $('input[name="type"]').change(function () {
         console.log($(this).val());
         loadCourse($(this).val());
     });
 
-    $('input[name="time"]').change(function () {
-        console.log($(this).val());
-        loadSchedule($(this).val());
-    });
+
 });
 
 function loadCourse(type) {
     $.ajax({
-        type: "GET",
+        type: "get",
         contentType: "application/json",
         url: "api/load_course_of_student",
         data: {
@@ -27,8 +21,9 @@ function loadCourse(type) {
         dataType: 'json',
         timeout: 10000,
         success: function (data) {
+            console.log(data);
             $('#courses').empty();
-            var tr = '<tr><th>Course Id</th><th>Name</th><th>Start</th><th>End</th></tr>';
+            var tr = '<tr><th>ID</th><th>Tên khóa học</th><th>Bắt đầu</th><th>Kết thúc</th><th>Học phí</th><th>Giáo viên</th></tr>';
             $('#courses').append(tr);
             $.each(data, function (index, course) {
                 var start = getDateFormat(course['startDate']);
@@ -37,7 +32,9 @@ function loadCourse(type) {
                     + '<td>' + course['courseId'] + '</td>'
                     + '<td>' + course['courseName'] + '</td>'
                     + '<td>' + start + '</td>'
-                    + '<td>' + end + '</td>';
+                    + '<td>' + end + '</td>'
+                    + '<td>' + course['fee'] + '</td>'
+                    + '<td>' + course['teacher'] + '</td>';
                 $('#courses').append(tr);
             });
         },
@@ -47,39 +44,6 @@ function loadCourse(type) {
     });
 }
 
-function loadSchedule(type) {
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "api/load_schedule",
-        data: {
-            type: type
-        },
-        dataType: 'json',
-        timeout: 10000,
-        success: function (data) {
-            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            $('#schedule').empty();
-            var tr = "<tr><th>No.</th><th>Course's name</th><th>Lesson's name</th><th>Date of the week</th><th>Date</th></tr>";
-            $('#schedule').append(tr);
-            $.each(data, function (index, lesson) {
-                var currentTime = new Date(lesson['date']);
-                var dateOfWeek = days[currentTime.getDay()];
-                var tr = '<tr class="rows">'
-                    + '<td>' + (index + 1) + '</td>'
-                    + '<td>' + lesson['course']['courseName'] + '</td>'
-                    + '<td>' + lesson['lessonName'] + '</td>'
-                    + '<td>' + dateOfWeek + '</td>'
-                    + '<td>' + getDateFormat(lesson['date']) + '</td>';
-
-                $('#schedule').append(tr);
-            });
-        },
-        error: function (e) {
-            console.log("ERROR: ", e);
-        }
-    });
-}
 
 function getDateFormat(date) {
     var d = new Date(date), month = '' + (d.getMonth() + 1), day = ''

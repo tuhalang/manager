@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/font-awesome.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/owl.carousel.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/style_student_course.css'/>"/>
 
 
     <!--[if lt IE 9]>
@@ -72,27 +73,28 @@
 
 <!-- Hero section -->
 <section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
-    <div class="container" style="padding-top: 150px; color: white">
-        <div class="row">
-            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                <strong style="margin-right: 20px; font-size: 20px">Courses</strong>
-                <input type="radio" name="type" value="0" id="learned"/> Đã học
-                <input type="radio" name="type" value="1" id="learning" checked="checked"/> Đang học
-                <table class="table" id="courses">
+    <div class="container" style="padding-top: 150px">
+        <div class="row" id="courses">
 
-                </table>
-            </div>
-            <%--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">--%>
-            <%--<strong style="margin-right: 20px; font-size: 20px">Schedule</strong>--%>
-            <%--<input type="radio" name="time" value="0" id="week"--%>
-            <%--checked="checked"/> this week <input type="radio" name="time"--%>
-            <%--value="1" id="month"/> this month--%>
-
-            <%--<table class="table" id="schedule">--%>
-
-            <%--</table>--%>
-            <%--</div>--%>
         </div>
+        <div style="padding-top: 20px">
+            <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+        </div>
+
+
+        <div class="hover_bkgr_fricc">
+            <span class="helper"></span>
+            <div>
+                <div class="popupCloseButton">X</div>
+                <div id="content-popup">
+
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 <!-- Hero section end -->
@@ -118,6 +120,8 @@
 <script src="<c:url value='/resources/js/circle-progress.min.js'/>"></script>
 <script src="<c:url value='/resources/js/owl.carousel.min.js'/>"></script>
 <script src="<c:url value='/resources/js/main.js'/>"></script>
-<script src="<c:url value='/resources/js/custom_student.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.twbsPagination.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/custom_student_course.js'/>"></script>
+
 </body>
 </html>

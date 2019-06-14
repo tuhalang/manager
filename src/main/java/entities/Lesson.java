@@ -106,4 +106,8 @@ public class Lesson implements Serializable {
     }
 
 
+    @Override
+    public String toString(){
+        return "{\"lessonName\":\""+lessonName+"\",\"content\":\""+content+"\"}";
+    }
 }
