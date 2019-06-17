@@ -44,7 +44,7 @@
                             </div>
                             <div class="form-group">
                                 <form:label path="userType" for="type"><i class="zmdi zmdi-lock"></i></form:label>
-                                <form:select path="userType" multiple="false">
+                                <form:select path="userType" multiple="false" cssStyle="margin-left: 30px">
                                     <form:option value="NONE" label="--- Select ---"/>
                                     <form:option value="teacher" label="teacher"/>
                                     <form:option value="student" label="student"/>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="signup-image">
                         <figure><img src="<c:url value='/resources/images/signup-image.jpg'/>" alt="sing up image"></figure>
-                        <a href="login.jsp" class="signup-image-link">I am already member</a>
+                        <a href="login" class="signup-image-link">I am already member</a>
                     </div>
                 </div>
             </div>
