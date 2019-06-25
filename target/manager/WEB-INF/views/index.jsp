@@ -51,7 +51,7 @@
             </div>
 
             <div class="col-lg-9 col-md-9">
-                <a href="login" class="site-btn header-btn">Login</a>
+                <a href="${pageContext.request.contextPath}/login" class="site-btn header-btn">Login</a>
             </div>
 
         </div>
@@ -72,6 +72,73 @@
 </section>
 <!-- Hero section end -->
 
+<div class="container">
+    <h3 style="margin: 20px">Top khóa học</h3>
+    <hr>
+    <div class="row" id="courses">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="card" style="width: 18rem;margin: 10px">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- footer section -->
 <footer class="">
     <div class="footer-bottom">
@@ -88,9 +155,11 @@
 
 <!--====== Javascripts & Jquery ======-->
 <script src="<c:url value='/resources/js/jquery-3.2.1.min.js'/>"></script>
-<script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/resources/js/bootstrap.js'/>"></script>
 <script src="<c:url value='/resources/js/mixitup.min.js'/>"></script>
 <script src="<c:url value='/resources/js/circle-progress.min.js'/>"></script>
 <script src="<c:url value='/resources/js/owl.carousel.min.js'/>"></script>
 <script src="<c:url value='/resources/js/main.js'/>"></script>
+<script src="<c:url value='/resources/js/custom_home.js'/>"></script>
+</body>
 </html>

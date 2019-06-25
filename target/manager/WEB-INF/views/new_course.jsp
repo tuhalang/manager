@@ -24,8 +24,12 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-
-
+    <link href="<c:url value="/resources/css/custom.css"/>" rel="stylesheet">
+    <style>
+        td{
+            height: 40px;
+        }
+    </style>
 </head>
 <body>
 <!-- Page Preloder -->
@@ -50,7 +54,20 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
+
+                <nav class="main-menu">
+                    <ul>
+                        <li><a  href="${pageContext.request.contextPath}/teacher">HOME</a></li>
+                        <li><a style="color: red" href="${pageContext.request.contextPath}/new_course">NEW COURSE</a></li>
+                    </ul>
+                </nav>
 
             </div>
 
@@ -59,21 +76,19 @@
 </header>
 <!-- Header section end -->
 
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg1.jpg'/>"
-     style="padding-top: 150px; color: white">
-    <div class="container">
+<div class="hero-section set-bg">
+    <div class="container" style="margin-top: 130px">
         <div class="row">
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                 <form:form method="POST" action="add_course" modelAttribute="course" name="course_form">
-                    <a href="${pageContext.request.contextPath}/teacher" class="btn btn-primary"
-                       style="margin-bottom: 50px">Back</a>
+
                     <table>
                         <tr>
                             <td>
                                 <form:label path="courseName">Tên khóa học: </form:label>
                             </td>
                             <td>
-                                <form:input type="text" path="courseName" required="required"/>
+                                <form:input cssStyle="height: 30px" type="text" path="courseName" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -81,7 +96,7 @@
                                 <form:label path="startDate">Bắt đầu: </form:label>
                             </td>
                             <td>
-                                <form:input type="date" path="startDate" required="required"/>
+                                <form:input cssStyle="height: 30px" type="date" path="startDate" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -89,7 +104,7 @@
                                 <form:label path="endDate">Kết thúc: </form:label>
                             </td>
                             <td>
-                                <form:input type="date" path="endDate" required="required"/>
+                                <form:input cssStyle="height: 30px" type="date" path="endDate" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +112,7 @@
                                 <form:label path="numOfLesson">Số bài học: </form:label>
                             </td>
                             <td>
-                                <form:input type="text" path="numOfLesson" required="required"/>
+                                <form:input cssStyle="height: 30px" type="text" path="numOfLesson" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -105,7 +120,7 @@
                                 <form:label path="fee">Học phí: </form:label>
                             </td>
                             <td>
-                                <form:input type="text" path="fee" required="required"/>
+                                <form:input cssStyle="height: 30px" type="text" path="fee" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -113,7 +128,7 @@
                                 <form:label path="promotion">Khuyến mãi: </form:label>
                             </td>
                             <td>
-                                <form:input type="text" path="promotion" required="required"/>
+                                <form:input cssStyle="height: 30px" type="text" path="promotion" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -145,7 +160,7 @@
                                 <label>Tên bài học: </label>
                             </td>
                             <td>
-                                <input id="name_lesson" type="text" required="required"/>
+                                <input style="height: 30px" id="name_lesson" type="text" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -153,7 +168,7 @@
                                 <label>Nội dung: </label>
                             </td>
                             <td>
-                                <input id="content_lesson" type="texta" required="required"/>
+                                <input style="height: 30px" id="content_lesson" type="text" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -161,7 +176,7 @@
                                 <label>Ngày: </label>
                             </td>
                             <td>
-                                <input id="date_lesson" type="date" required="required"/>
+                                <input style="height: 30px" id="date_lesson" type="date" required="required"/>
                             </td>
                         </tr>
                         <tr>
@@ -169,7 +184,7 @@
                                 <label>Thời lượng: </label>
                             </td>
                             <td>
-                                <input id="length_lesson" type="text" required="required"/>
+                                <input style="height: 30px" id="length_lesson" type="text" required="required"/>
                             </td>
                         </tr>
 

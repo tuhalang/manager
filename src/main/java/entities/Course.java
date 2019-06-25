@@ -1,6 +1,7 @@
 package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dao.impl.UserDAOImpl;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -67,8 +68,24 @@ public class Course implements Serializable {
         this.fee = fee;
         this.promotion = promotion;
         this.courseType = new CourseType(type);
+        this.status = 1;
     }
 
+    public Course(String courseName, Date startDate, Date endDate, int numOfLesson, double fee, double promotion,
+                  String type, String uname) {
+        User user = new User(uname);
+        Set<User> users = new HashSet<>();
+        users.add(user);
+        this.setListUsers(users);
+        this.courseName = courseName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.numOfLesson = numOfLesson;
+        this.fee = fee;
+        this.promotion = promotion;
+        this.courseType = new CourseType(type);
+        this.status = 1;
+    }
 
     public Course(int courseId, String courseName, Date startDate, Date endDate, int numOfLesson, double fee,
                   double promotion, CourseType courseType) {
@@ -81,6 +98,7 @@ public class Course implements Serializable {
         this.fee = fee;
         this.promotion = promotion;
         this.courseType = courseType;
+        this.status = 1;
     }
 
     public int getCourseId() {
@@ -182,9 +200,9 @@ public class Course implements Serializable {
     }
 
 
-    public User getTeacher(){
-        for (User user : listUsers){
-            if(user.getUserType().getType().equalsIgnoreCase("teacher")){
+    public User getTeacher() {
+        for (User user : listUsers) {
+            if (user.getUserType().getType().equalsIgnoreCase("teacher")) {
                 return user;
             }
         }
@@ -192,15 +210,15 @@ public class Course implements Serializable {
     }
 
     @Override
-    public String toString(){
-        String jsonObj = "{\"courseId\":\""+courseId+"\","+
-                "\"courseName\":\""+courseName+"\","+
-                "\"teacher\":\""+getTeacher().getFullname()+"\","+
-                "\"startDate\":\""+startDate+"\","+
-                "\"endDate\":\""+endDate+"\","+
-                "\"numOfLesson\":"+numOfLesson+","+
-                "\"lessons\":"+listLessons+","+
-                "\"fee\":"+fee+""+
+    public String toString() {
+        String jsonObj = "{\"courseId\":\"" + courseId + "\"," +
+                "\"courseName\":\"" + courseName + "\"," +
+                "\"teacher\":\"" + getTeacher().getFullname() + "\"," +
+                "\"startDate\":\"" + startDate + "\"," +
+                "\"endDate\":\"" + endDate + "\"," +
+                "\"numOfLesson\":" + numOfLesson + "," +
+                "\"lessons\":" + listLessons + "," +
+                "\"fee\":" + fee + "" +
                 "}";
         return jsonObj;
     }

@@ -23,13 +23,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-
-
-    <style>
-        a{
-            color: yellow;
-        }
-    </style>
+    <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>"/>
 
 
 </head>
@@ -56,13 +50,21 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="logout" class="site-btn header-btn">Đăng xuất</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+
+                </div>
 
                 <nav class="main-menu">
                     <ul>
                         <li><a style="color: red" href="${pageContext.request.contextPath}/admin">KHÓA HỌC</a></li>
                         <li><a  href="${pageContext.request.contextPath}/admin/teacher">GIÁO VIÊN</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/student">HỌC VIÊN</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/create_new">TẠO MỚI</a></li>
                     </ul>
                 </nav>
 
@@ -73,7 +75,7 @@
 </header>
 <!-- Header section end -->
 
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>" style="padding-top: 150px; color: white">
+<div class="hero-section set-bg" style="padding-top: 130px">
     <div class="course_info" style="padding-left: 50px">
         <div class="rows">
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">

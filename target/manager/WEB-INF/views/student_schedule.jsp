@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/font-awesome.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/owl.carousel.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>"/>
 
 
     <!--[if lt IE 9]>
@@ -52,13 +53,19 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="logout" class="site-btn header-btn">Logout</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
 
                 <nav class="main-menu">
                     <ul>
                         <li><a href="${pageContext.request.contextPath}/student">HOME</a></li>
                         <li><a style="color: red" href="${pageContext.request.contextPath}/student/schedule">SCHEDULE</a></li>
-                        <li><a href="${pageContext.request.contextPath}/student/course">COURSES</a></li>
+                        <li><a href="${pageContext.request.contextPath}/student/course">HISTORIES</a></li>
                     </ul>
                 </nav>
 
@@ -71,8 +78,8 @@
 
 
 <!-- Hero section -->
-<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
-    <div class="container" style="padding-top: 150px; color: white">
+<section class="hero-section set-bg">
+    <div class="container" style="padding-top: 150px;">
         <div class="row">
 
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">

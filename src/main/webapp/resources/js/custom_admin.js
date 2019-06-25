@@ -246,7 +246,7 @@ function updateTableCourse(data) {
             + '<td>' + course['fee'] + '</td>'
             + '<td>' + course['promotion'] + '</td>'
             + '<td>' + course['courseType']['type'] + '</td>'
-            + '<td><a href="course_detail?id=' + course['courseId']
+            + '<td><a class="btn btn-info" href="course_detail?id=' + course['courseId']
             + '">chi tiết</a></td>' + '</tr>';
         $('#list_course').append(tr);
     });

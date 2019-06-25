@@ -19,4 +19,7 @@ public interface CourseDAO {
     boolean update(Course course);
 
     boolean save(Course course);
+
+    List<Course> search(String type, String key, int start, int max);
+    List<Course> searchInUser(int userId, String key, int start, int max);
 }

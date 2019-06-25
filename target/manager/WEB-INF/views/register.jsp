@@ -43,14 +43,6 @@
                                 <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
                             </div>
                             <div class="form-group">
-                                <form:label path="userType" for="type"><i class="zmdi zmdi-lock"></i></form:label>
-                                <form:select path="userType" multiple="false" cssStyle="margin-left: 30px">
-                                    <form:option value="NONE" label="--- Select ---"/>
-                                    <form:option value="teacher" label="teacher"/>
-                                    <form:option value="student" label="student"/>
-                                </form:select>
-                            </div>
-                            <div class="form-group">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                             </div>

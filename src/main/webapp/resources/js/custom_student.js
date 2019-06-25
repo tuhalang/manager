@@ -3,18 +3,37 @@ $(document).ready(function () {
     loadCourse(1);
 
     $('input[name="type"]').change(function () {
-        console.log($(this).val());
         loadCourse($(this).val());
     });
 
 
 });
 
+function searchInUser() {
+    var key = $('#search_course').val();
+    $.ajax({
+        type: "get",
+        contentType: "application/json",
+        url: "../api/searchInUser",
+        data: {
+            key: key
+        },
+        dataType: 'json',
+        timeout: 10000,
+        success: function (data) {
+            updateData(data);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    })
+}
+
 function loadCourse(type) {
     $.ajax({
         type: "get",
         contentType: "application/json",
-        url: "api/load_course_of_student",
+        url: "../api/load_course_of_student",
         data: {
             type: type
         },
@@ -22,25 +41,29 @@ function loadCourse(type) {
         timeout: 10000,
         success: function (data) {
             console.log(data);
-            $('#courses').empty();
-            var tr = '<tr><th>ID</th><th>Tên khóa học</th><th>Bắt đầu</th><th>Kết thúc</th><th>Học phí</th><th>Giáo viên</th></tr>';
-            $('#courses').append(tr);
-            $.each(data, function (index, course) {
-                var start = getDateFormat(course['startDate']);
-                var end = getDateFormat(course['endDate']);
-                var tr = '<tr class="rows">'
-                    + '<td>' + course['courseId'] + '</td>'
-                    + '<td>' + course['courseName'] + '</td>'
-                    + '<td>' + start + '</td>'
-                    + '<td>' + end + '</td>'
-                    + '<td>' + course['fee'] + '</td>'
-                    + '<td>' + course['teacher'] + '</td>';
-                $('#courses').append(tr);
-            });
+            updateData(data);
         },
         error: function (e) {
             console.log("ERROR: ", e);
         }
+    });
+}
+
+function updateData(data) {
+    $('#courses').empty();
+    var tr = '<tr><th>ID</th><th>Tên khóa học</th><th>Bắt đầu</th><th>Kết thúc</th><th>Học phí</th><th>Giáo viên</th></tr>';
+    $('#courses').append(tr);
+    $.each(data, function (index, course) {
+        var start = getDateFormat(course['startDate']);
+        var end = getDateFormat(course['endDate']);
+        var tr = '<tr class="rows">'
+            + '<td>' + course['courseId'] + '</td>'
+            + '<td>' + course['courseName'] + '</td>'
+            + '<td>' + start + '</td>'
+            + '<td>' + end + '</td>'
+            + '<td>' + course['fee'] + '</td>'
+            + '<td>' + course['teacher'] + '</td>';
+        $('#courses').append(tr);
     });
 }
 

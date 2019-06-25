@@ -21,7 +21,10 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/font-awesome.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/owl.carousel.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
-
+    <link rel="stylesheet" href="<c:url value='/resources/css/style_student_course.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -52,13 +55,19 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="logout" class="site-btn header-btn">Logout</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
 
                 <nav class="main-menu">
                     <ul>
                         <li><a href="${pageContext.request.contextPath}/student">HOME</a></li>
                         <li><a href="${pageContext.request.contextPath}/student/schedule">SCHEDULE</a></li>
-                        <li><a href="${pageContext.request.contextPath}/student/course">COURSES</a></li>
+                        <li><a href="${pageContext.request.contextPath}/student/course">HISTORIES</a></li>
                     </ul>
                 </nav>
 
@@ -71,28 +80,32 @@
 
 
 <!-- Hero section -->
-<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
-    <div class="container" style="padding-top: 150px; color: white">
-        <div class="row">
-            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                <strong style="margin-right: 20px; font-size: 20px">Courses</strong>
-                <input type="radio" name="type" value="0" id="learned"/> Đã học
-                <input type="radio" name="type" value="1" id="learning" checked="checked"/> Đang học
-                <table class="table" id="courses">
+<section class="hero-section set-bg">
+    <div class="container" style="padding-top: 150px">
+        <input onkeyup="searchCourse()" id="search_course" type="text" class="input-group-text" placeholder="search" style="height: 30px;margin-right: 20px">
+        <input type="radio" name="type" value="1"> By name
+        <input type="radio" name="type" value="2"> By time(yyyy-MM)
+        <div class="row" id="courses">
 
-                </table>
-            </div>
-            <%--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">--%>
-            <%--<strong style="margin-right: 20px; font-size: 20px">Schedule</strong>--%>
-            <%--<input type="radio" name="time" value="0" id="week"--%>
-            <%--checked="checked"/> this week <input type="radio" name="time"--%>
-            <%--value="1" id="month"/> this month--%>
-
-            <%--<table class="table" id="schedule">--%>
-
-            <%--</table>--%>
-            <%--</div>--%>
         </div>
+        <div style="padding-top: 20px">
+            <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+        </div>
+
+
+        <div class="hover_bkgr_fricc">
+            <span class="helper"></span>
+            <div>
+                <div class="popupCloseButton">X</div>
+                <div id="content-popup">
+
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 <!-- Hero section end -->
@@ -118,6 +131,8 @@
 <script src="<c:url value='/resources/js/circle-progress.min.js'/>"></script>
 <script src="<c:url value='/resources/js/owl.carousel.min.js'/>"></script>
 <script src="<c:url value='/resources/js/main.js'/>"></script>
-<script src="<c:url value='/resources/js/custom_student.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.twbsPagination.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/custom_student_course.js'/>"></script>
+
 </body>
 </html>

@@ -15,7 +15,7 @@ function loadCourseShort(page) {
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "../api/load_course_short",
+        url: "api/load_course_short",
         data: {
             page: page
         },
@@ -23,23 +23,39 @@ function loadCourseShort(page) {
         timeout: 10000,
         success: function (data) {
             console.log(data);
-            $("#courses").empty();
-            $.each(data, function (index, val) {
-                var div = "<div class=\"col-xs-4 col-sm-4 col-md-4 col-lg-4\">\n" +
-                    "                <div class=\"card\" style=\"margin-top: 10px\">\n" +
-                    "                    <div class=\"card-body\">\n" +
-                    "                        <h5 class=\"card-title\">" + val['courseName'] + "</h5>\n" +
-                    "                        <p class=\"card-text\"> Giáo viên: " + val['teacher'] + "</p>\n" +
-                    "                        <p class=\"card-text\"> Học phí: " + val['fee'] + "</p>\n" +
-                    "                        <button onclick=\"showPopUp(" + val['courseId'] + ")\" class=\"btn btn-primary\">Chi tiết</button>\n" +
-                    "                    </div>\n" +
-                    "                </div>\n" +
-                    "            </div>";
-                $("#courses").append(div);
-            })
+            updateData(data);
         },
         error: function (e) {
             console.log("ERROR: ", e);
+        }
+    })
+}
+
+function searchCourse(){
+    var type = $("input[name='type']:checked"). val();
+    if(type == "1"){
+        type = "courseName";
+    }
+    if(type == "2"){
+        type = "startDate";
+    }
+    var key = $('#search_course').val();
+    $.ajax({
+        type : 'get',
+        contentType : "application/json; charset=utf-8",
+        url: "api/search_course",
+        data: {
+            type: type,
+            key : key
+        },
+        dataType: 'json',
+        timeout: 10000,
+        success : function (data) {
+            console.log(data);
+            updateData(data);
+        },
+        error : function (e) {
+            console.log(e);
         }
     })
 }
@@ -49,7 +65,7 @@ function showPopUp(courseId) {
     $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
-        url: "../api/show_course_detail",
+        url: "api/show_course_detail",
         data: {
             courseId: courseId
         },
@@ -105,12 +121,29 @@ function showPopUp(courseId) {
     });
 }
 
+function updateData(data){
+    $("#courses").empty();
+    $.each(data, function (index, val) {
+        var div = "<div class=\"col-xs-4 col-sm-4 col-md-4 col-lg-4\">\n" +
+            "                <div class=\"card\" style=\"margin-top: 10px\">\n" +
+            "                    <div class=\"card-body\">\n" +
+            "                        <h5 class=\"card-title\">" + val['courseName'] + "</h5>\n" +
+            "                        <p class=\"card-text\"> Giáo viên: " + val['teacher'] + "</p>\n" +
+            "                        <p class=\"card-text\"> Học phí: " + val['fee'] + "</p>\n" +
+            "                        <button onclick=\"showPopUp(" + val['courseId'] + ")\" class=\"btn btn-primary\">Chi tiết</button>\n" +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "            </div>";
+        $("#courses").append(div);
+    })
+}
+
 
 function enroll(courseId) {
     $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
-        url: "../api/enroll",
+        url: "api/enroll",
         data: {
             courseId: courseId
         },
@@ -129,7 +162,7 @@ function loadPage() {
     $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "../api/get_total_course",
+        url: "api/get_total_course",
         data: {
             type_id: 0
         },

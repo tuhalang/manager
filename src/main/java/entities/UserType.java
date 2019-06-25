@@ -44,5 +44,11 @@ public class UserType implements Serializable {
         this.type = type;
     }
 
-
+    @Override
+    public String toString(){
+        String jsonObj = "{\"userTypeId\":\""+userTypeId+"\","+
+                "\"type\":\""+type+"\""+
+                "}";
+        return jsonObj;
+    }
 }

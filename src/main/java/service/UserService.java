@@ -19,4 +19,9 @@ public interface UserService {
     List<User> getAllUser(UserType userType);
 
     User getUserById(int userId);
+
+    List<User> searchByName(int userTypeId, String name);
+
+    User getByUsername(String username);
+
 }

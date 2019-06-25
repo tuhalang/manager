@@ -23,13 +23,9 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>"/>
 
 
-    <style>
-        a{
-            color: yellow;
-        }
-    </style>
 
 
 </head>
@@ -56,13 +52,20 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
 
                 <nav class="main-menu">
                     <ul>
                         <li><a style="color: red" href="${pageContext.request.contextPath}/admin">KHÓA HỌC</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/teacher">GIÁO VIÊN</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/student">HỌC VIÊN</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/create_new">TẠO MỚI</a></li>
                     </ul>
                 </nav>
 
@@ -75,19 +78,19 @@
 
 
 <!-- Hero section -->
-<section class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>">
+<section class="hero-section set-bg">
     <div class="container" style="color: black; padding-top: 150px">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row" style="display: block; margin-bottom: 30px;">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <h4 style="color: wheat">Loại khóa học</h4>
+                        <h4>Loại khóa học</h4>
                         <select name="Type" id="course_type" style="color: #1b1e21">
                             <option value="0">All</option>
                         </select>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <h4 style="color: wheat">Lọc theo học viên</h4>
+                        <h4>Lọc theo học viên</h4>
                         <select id="multiple-search" name="states[]" multiple="multiple"
                                 style="width: 200px">
 

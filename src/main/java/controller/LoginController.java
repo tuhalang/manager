@@ -1,6 +1,7 @@
 package controller;
 
 import entities.User;
+import entities.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
+import service.UserTypeService;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +20,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserTypeService userTypeService;
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String Default() {
@@ -36,18 +41,16 @@ public class LoginController {
         User user = userService.findByAccount(username, password);
 
         if (user != null) {
-            map.addAttribute("user", user);
-            System.out.println(user);
-            switch (user.getUserType().getType()) {
-                case "admin":
-                    return "redirect:admin";
-                case "teacher":
-                    return "redirect:teacher";
-                case "student":
-                    return "redirect:student";
-                default:
-                    break;
+            if(user.getStatus()==1){
+                map.addAttribute("user", user);
+                System.out.println(user);
+                String page = "redirect:"+user.getUserType().getType();
+                return page;
+            }else {
+                map.addAttribute("error", "Tài khoản của bạn đã bị khóa vui lòng liên hệ quản trị viên để được giải quyết!");
+                return "login";
             }
+
         }
         map.addAttribute("error", "username or password incorrect!");
         return "login";
@@ -55,6 +58,9 @@ public class LoginController {
 
     @RequestMapping(value = "submit-register", method = RequestMethod.POST)
     public String register(@ModelAttribute("user") User user, BindingResult result, ModelMap model) {
+        UserType userType = userTypeService.getByName("student");
+        user.setUserType(userType);
+        user.setStatus(1);
         if (!result.hasErrors()) {
             if (userService.save(user)) {
                 model.addAttribute("info", "register successfully!, please login!");

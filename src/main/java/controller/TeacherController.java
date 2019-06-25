@@ -94,12 +94,6 @@ public class TeacherController {
         }
         int lengthLesson = Integer.parseInt(request.getParameter("lengthLesson"));
 
-        System.out.println(courseId);
-        System.out.println(nameLesson);
-        System.out.println(contentLesson);
-        System.out.println(request.getParameter("dateLesson"));
-        System.out.println(date);
-
         Course course = courseService.getById(courseId);
         Set<Lesson> listLessons = course.getListLessons();
         Lesson lesson = new Lesson();

@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>"/>
 
 </head>
 <body>
@@ -50,7 +50,20 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
+
+                <nav class="main-menu">
+                    <ul>
+                        <li><a href="${pageContext.request.contextPath}/teacher">HOME</a></li>
+                        <li><a href="${pageContext.request.contextPath}/new_course">NEW COURSE</a></li>
+                    </ul>
+                </nav>
 
             </div>
 
@@ -58,12 +71,10 @@
     </div>
 </header>
 <!-- Header section end -->
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg1.jpg'/>"
-     style="padding-top: 150px; color: white">
-    <div class="container">
+<div class="hero-section set-bg">
+    <div class="container" style="margin-top: 130px">
         <div class="row">
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                <a href="${pageContext.request.contextPath}/teacher" class="btn btn-primary">Back</a>
                 <h3>Info of course:</h3>
                 <form:form modelAttribute="course" style="padding-top: 20px" method="POST" action="${pageContext.request.contextPath}/update_course">
                     <div class="input-group">
@@ -71,19 +82,19 @@
                         <form:input path="courseId" type="text" class="form-control" cssStyle="height: 28px"/>
                     </div>
                     <div class="input-group">
-				<span class="input-group-addon" style="width: 125px">Tên khóa học:</span>
+				        <span class="input-group-addon" style="width: 125px">Tên khóa học:</span>
                         <form:input path="courseName" type="text" class="form-control" cssStyle="height: 28px"/>
                     </div>
                     <div class="input-group">
-				<span class="input-group-addon" style="width: 125px">Bắt đầu:</span>
+				        <span class="input-group-addon" style="width: 125px">Bắt đầu:</span>
                         <form:input path="startDate" type="date" class="form-control" cssStyle="height: 28px; width: 183px;"/>
                     </div>
                     <div class="input-group">
-				<span class="input-group-addon" style="width: 125px">Kết thúc:</span>
+				        <span class="input-group-addon" style="width: 125px">Kết thúc:</span>
                         <form:input path="endDate" type="date" class="form-control" cssStyle="height: 28px; width: 183px;"/>
                     </div>
                     <div class="input-group">
-				<span class="input-group-addon" style="width: 125px">Số bài học:</span>
+				        <span class="input-group-addon" style="width: 125px">Số bài học:</span>
                         <form:input path="numOfLesson" type="text" class="form-control" cssStyle="height: 28px"/>
                     </div>
                     <div class="input-group">

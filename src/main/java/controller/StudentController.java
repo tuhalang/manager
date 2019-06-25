@@ -71,14 +71,25 @@ public class StudentController {
                 listCourses.add(course);
             }
         }
-//        ObjectMapper mapper = new ObjectMapper();
-//        String ajaxResponse = "";
-//        try {
-//            ajaxResponse = mapper.writeValueAsString(listCourses);
-//        } catch (JsonProcessingException e) {
-//            System.out.println(e.getMessage());
-//        }
         return listCourses.toString();
+    }
+
+    @RequestMapping(value = "api/search_course", method = RequestMethod.GET)
+    @ResponseBody
+    public String searchCourse(HttpServletRequest request, HttpSession httpSession) {
+        String type = request.getParameter("type");
+        String key = request.getParameter("key");
+        List<Course> courses = courseService.search(type, key, 0, 6);
+        return courses.toString();
+    }
+
+    @RequestMapping(value = "api/searchInUser", method = RequestMethod.GET)
+    @ResponseBody
+    public String searchInuser(HttpServletRequest request, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        String key = request.getParameter("key");
+        List<Course> courses = courseService.searchInUser(user.getUserId(),key, 0, 6);
+        return courses.toString();
     }
 
 

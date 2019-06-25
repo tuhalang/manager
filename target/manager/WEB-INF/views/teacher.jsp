@@ -23,12 +23,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-
-    <style>
-        a{
-            color: red;
-        }
-    </style>
+    <link href="<c:url value="/resources/css/custom.css"/>" rel="stylesheet">
 
 </head>
 <body>
@@ -54,7 +49,20 @@
 
             <div class="col-lg-9 col-md-9">
 
-                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
+
+                <nav class="main-menu">
+                    <ul>
+                        <li><a style="color: red" href="${pageContext.request.contextPath}/teacher">HOME</a></li>
+                        <li><a href="${pageContext.request.contextPath}/new_course">NEW COURSE</a></li>
+                    </ul>
+                </nav>
 
             </div>
 
@@ -63,12 +71,11 @@
 </header>
 <!-- Header section end -->
 
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg1.jpg'/>"
-     style="padding-top: 150px; color: white">
-    <div class="container">
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/new_course">Tạo khóa học mới</a>
+<div class="hero-section set-bg">
+    <div class="container" style="margin-top: 130px">
         <h3>Các khóa học đang dạy:</h3>
-        <table class="table">
+        <input id="search" onkeyup="searchCourse()" type="text" class="input-group-text" placeholder="search" style="height: 30px;margin-right: 20px">
+        <table id="courses" class="table" style="margin-top: 20px">
             <tr class="row" style="font-weight: bold">
                 <td>Id</td>
                 <td>Tên khóa học</td>
@@ -87,7 +94,7 @@
                     <td>${course.getEndDate()}</td>
                     <td>${course.getNumOfLesson()}</td>
                     <td>${course.getStatus()}</td>
-                    <td><a href="${pageContext.request.contextPath}/edit_course?id=${course.getCourseId()}">edit</a>
+                    <td><a class="btn btn-info" href="${pageContext.request.contextPath}/edit_course?id=${course.getCourseId()}">edit</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -123,5 +130,54 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.twbsPagination.js'/>"></script>
+
+<script type="text/javascript">
+    function searchCourse(){
+        var key = $('#search').val();
+        $.ajax({
+            type: "get",
+            contentType: "application/json",
+            url: "api/searchInUser",
+            data: {
+                key: key
+            },
+            dataType: 'json',
+            timeout: 10000,
+            success: function (data) {
+                updateDate(data);
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+            }
+        })
+    }
+    function updateDate(data) {
+        $('#courses').empty();
+        var tr = "<tr class=\"row\" style=\"font-weight: bold\">\n" +
+            "                <td>Id</td>\n" +
+            "                <td>Tên khóa học</td>\n" +
+            "                <td>Học phí</td>\n" +
+            "                <td>Bắt đầu</td>\n" +
+            "                <td>Kết thúc</td>\n" +
+            "                <td>Số bài học</td>\n" +
+            "                <td>Trạng thái</td>\n" +
+            "            </tr>";
+        $('#courses').append(tr);
+        $.each(data, function (index, course) {
+            var tr = "<tr class=\"row\">\n" +
+                "                    <td>"+course['courseId']+"</td>\n" +
+                "                    <td>"+course['courseName']+"</td>\n" +
+                "                    <td>"+course['fee']+"</td>\n" +
+                "                    <td>"+course['startDate']+"</td>\n" +
+                "                    <td>"+course['endDate']+"</td>\n" +
+                "                    <td>"+course['numOfLesson']+"</td>\n" +
+                "                    <td>"+course['status']+"</td>\n" +
+                "                    <td><a class=\"btn btn-info\" href=\"${pageContext.request.contextPath}/edit_course?id="+course['courseId']+"\">edit</a>\n" +
+                "                    </td>\n" +
+                "                </tr>";
+            $('#courses').append(tr);
+        })
+    }
+</script>
 </body>
 </html>

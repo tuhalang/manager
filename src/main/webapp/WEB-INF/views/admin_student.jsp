@@ -23,12 +23,8 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/resources/css/custom.css'/>"/>
 
-    <style>
-        a{
-            color: yellow;
-        }
-    </style>
 
 
 
@@ -55,14 +51,20 @@
             </div>
 
             <div class="col-lg-9 col-md-9">
-
-                <a href="${pageContext.request.contextPath}/logout" class="site-btn header-btn">Đăng xuất</a>
+                <div class="dropdown header-btn">
+                    <button class=" dropbtn site-btn header-btn">${user.getFullname().substring(0,1)}</button>
+                    <div class="dropdown-content">
+                        <a href="${pageContext.request.contextPath}/account">Tài khoản</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                    </div>
+                </div>
 
                 <nav class="main-menu">
                     <ul>
                         <li><a href="${pageContext.request.contextPath}/admin">KHÓA HỌC</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/teacher">GIÁO VIÊN</a></li>
                         <li><a style="color: red" href="${pageContext.request.contextPath}/admin/student">HỌC VIÊN</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/create_new">TẠO MỚI</a></li>
                     </ul>
                 </nav>
 
@@ -73,9 +75,10 @@
 </header>
 <!-- Header section end -->
 
-<div class="hero-section set-bg" data-setbg="<c:url value='/resources/img/bg2.jpg'/>" style="padding-top: 150px; color: black">
-    <div class="container">
-        <table class="table" style="margin-top: 100px">
+<div class="hero-section set-bg">
+    <div class="container" style="margin-top: 130px">
+        <input id="search-student" onkeyup="search(3)" class="form-control" type="text" placeholder="tìm kiếm học viên" style="height: 30px; width: 200px">
+        <table id="students" class="table table-bordered" style="width: 1100px">
             <tr class="row" style="font-weight: bold">
                 <td>Id</td>
                 <td>Họ tên</td>
@@ -92,6 +95,13 @@
                             <a href="${pageContext.request.contextPath}/course_detail?id=${course.getCourseId()}">${course.getCourseName()}</a>,
                         </c:forEach>
                     </td>
+                        <%--TODO--%>
+                    <c:if test="${student.getStatus() == 1}">
+                        <td><button onclick="block(this, ${student.getUserId()})" class="btn btn-danger">block</button></td>
+                    </c:if>
+                    <c:if test="${student.getStatus() == 0}">
+                        <td><button onclick="block(this, ${student.getUserId()})" class="btn btn-primary">unblock</button></td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
@@ -126,4 +136,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.twbsPagination.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/custom_admin_student.js'/>"></script>
+</body>
 </html>

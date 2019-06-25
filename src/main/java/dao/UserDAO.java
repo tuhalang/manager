@@ -20,5 +20,9 @@ public interface UserDAO {
 
     User getUserById(int userId);
 
+    User getByUsername(String username);
+
     boolean isExist(String username);
+
+    List<User> searchByName(int userTypeId, String name);
 }

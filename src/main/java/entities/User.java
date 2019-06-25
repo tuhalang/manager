@@ -38,6 +38,15 @@ public class User implements Serializable {
     private String password;
     @Column(name = "fullname")
     private String fullname;
+    @Column(name="status")
+    private int status;
+    @Column(name="email")
+    private String email;
+    @Column(name="phone")
+    private String phone;
+    @Column(name="address")
+    private String address;
+
     @OneToOne
     @JoinColumn(name = "user_type_id")
     private UserType userType;
@@ -52,6 +61,16 @@ public class User implements Serializable {
         this.password = password;
         this.fullname = fullname;
         this.userType = new UserType(type);
+    }
+
+    public User(String username, String password, String fullname) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
     public int getUserId() {
@@ -90,6 +109,38 @@ public class User implements Serializable {
         return userType;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
@@ -126,6 +177,20 @@ public class User implements Serializable {
             total += lesson.getLength();
         }
         return total;
+    }
+
+    @Override
+    public String toString(){
+        String jsonObj = "{\"userId\":\""+userId+"\","+
+                "\"username\":\""+username+"\","+
+                "\"fullname\":\""+fullname+"\","+
+                "\"status\":\""+status+"\","+
+                "\"courses\":"+listCourses+","+
+                "\"userType\":"+userType+","+
+                "\"lessons\":"+listLessons+","+
+                "\"totalTime\":"+totalTime()+
+                "}";
+        return jsonObj;
     }
 
 
