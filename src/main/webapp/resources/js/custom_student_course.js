@@ -140,6 +140,7 @@ function updateData(data){
 
 
 function enroll(courseId) {
+    $(".loader").show();
     $.ajax({
         type: "GET",
         contentType: "application/json; charset=utf-8",
@@ -150,6 +151,7 @@ function enroll(courseId) {
         dataType: 'text',
         timeout: 10000,
         success: function (data) {
+            $(".loader").hide();
             alert(data);
         },
         error: function (e) {

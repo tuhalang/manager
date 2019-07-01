@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.CourseService;
 import service.LessonService;
 import service.UserService;
+import utils.Mail;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,9 @@ public class StudentController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    Mail mail;
 
     @RequestMapping(value = "student", method = RequestMethod.GET)
     public String Default(HttpSession httpSession) {
@@ -135,21 +140,26 @@ public class StudentController {
 
     @RequestMapping(value = "api/enroll", method = RequestMethod.GET)
     @ResponseBody
-    public String enroll(HttpServletRequest request, HttpSession httpSession) {
+    public String enroll(HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         User user = (User) httpSession.getAttribute("user");
         if (user != null && user.getUserType().getType().equalsIgnoreCase("student")) {
             int courseId = Integer.parseInt(request.getParameter("courseId"));
             Set<Course> courseSet = user.getListCourses();
-            courseSet.add(courseService.getById(courseId));
+            Course course = courseService.getById(courseId);
+            courseSet.add(course);
             user.setListCourses(courseSet);
             if(userService.update(user)){
-                return "Đăng kí khóa học thành công!";
+                mail.sendMail(user.getEmail(), "Dang ki khoa hoc thanh cong!",
+                        "Cam on ban da dang ki khoa hoc " + course.getCourseName());
+                mail.sendMail(course.getTeacher().getEmail(), "Hoc vien dang ki khoa hoc",
+                        "Hoc vien " + user.getFullname() + " da dang ki khoa hoc " +  course.getCourseName());
+                return "Enroll successful !";
             }
             else{
-                return "Đăng kí khóa học thất bại!";
+                return "Enroll failed !";
             }
         }
-        return "Đăng kí khóa học thất bại!";
+        return "Enroll failed !";
     }
 
     @RequestMapping(value = "api/show_course_detail", method = RequestMethod.GET)

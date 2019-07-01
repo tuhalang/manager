@@ -1,4 +1,13 @@
 $(document).ready(function () {
+    // $('.hover_bkgr_fricc').click(function () {
+    //     $('.hover_bkgr_fricc').hide();
+    // });
+    $('.popupCloseButton').click(function () {
+        $('.hover_bkgr_fricc').hide();
+    });
+    $('#create_new').click(function () {
+        $('.hover_bkgr_fricc').show();
+    });
 
 })
 

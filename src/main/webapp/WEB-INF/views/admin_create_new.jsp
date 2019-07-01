@@ -64,6 +64,7 @@
                         <li><a href="${pageContext.request.contextPath}/admin/teacher">GIÁO VIÊN</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/student">HỌC VIÊN</a></li>
                         <li><a style="color: red" href="${pageContext.request.contextPath}/admin/create_new">TẠO MỚI</a>
+                        <li><a href="${pageContext.request.contextPath}/admin/fee">HỌC PHÍ</a></li>
                         </li>
                     </ul>
                 </nav>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +67,7 @@
                         <li><a style="color: red" href="${pageContext.request.contextPath}/admin/teacher">GIÁO VIÊN</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/student">HỌC VIÊN</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/create_new">TẠO MỚI</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/fee">HỌC PHÍ</a></li>
                     </ul>
                 </nav>
 
@@ -78,7 +80,8 @@
 
 <div class="hero-section set-bg">
     <div class="container" style="margin-top: 130px">
-        <input id="search-teacher" onkeyup="search(2)" class="form-control" type="text" placeholder="tìm kiếm giáo viên" style="height: 30px; width: 200px">
+        <button id="create_new" class="btn btn-primary" style="margin-right: 40px">Tạo tài khoản mới</button>
+        <input id="search-teacher" onkeyup="search(2)" class="form-control" type="text" placeholder="tìm kiếm giáo viên" style="height: 30px; width: 400px">
         <table id="teachers" class="table table-bordered" style="width: 1000px">
             <tr class="row" style="font-weight: bold">
                 <td>Id</td>
@@ -104,6 +107,38 @@
                 </tr>
             </c:forEach>
         </table>
+        <div class="hover_bkgr_fricc">
+            <span class="helper"></span>
+            <div>
+                <div class="popupCloseButton">X</div>
+                <div id="content-popup">
+                    <div id="newAccount" class="row">
+                        <form:form method="POST" class="register-form" id="register-form" name="register-form" modelAttribute="newUser">
+                            <h3>Tạo tài khoản giáo viên</h3>
+                            <div class="form-group">
+                                <form:label path="fullname" for="name"><i class="zmdi zmdi-account material-icons-name"></i></form:label>
+                                <form:input cssStyle="width: 350px; height: 30px" path="fullname" type="text" id="name" placeholder="Name"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="username" for="email"><i class="zmdi zmdi-email"></i></form:label>
+                                <form:input cssStyle="width: 350px; height: 30px" path="username" type="email" id="email" placeholder="Email"/>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="password" for="pass"><i class="zmdi zmdi-lock"></i></form:label>
+                                <form:input cssStyle="width: 350px; height: 30px" path="password" type="password" id="pass" placeholder="Password"/>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input style="width: 350px; height: 30px" type="password"  id="re_pass" placeholder="Repeat your password"/>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" class="btn btn-primary" id="signup" class="form-submit" value="Create"/>
+                            </div>
+                        </form:form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

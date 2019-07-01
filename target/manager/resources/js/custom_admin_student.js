@@ -1,5 +1,10 @@
 $(document).ready(function () {
-
+    $('.popupCloseButton').click(function () {
+        $('.hover_bkgr_fricc').hide();
+    });
+    $('#create_new').click(function () {
+        $('.hover_bkgr_fricc').show();
+    });
 })
 
 function block(e, userId) {

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Sign Up</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="<c:url value='/resources/fonts/material-icon/css/material-design-iconic-font.min.css'/>">
@@ -25,6 +25,7 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
+                        <h4 style="color: red">${info}</h4>
                         <form:form method="POST" class="register-form" id="register-form" modelAttribute="user" action="${pageContext.request.contextPath}/submit-register">
                             <div class="form-group">
                                 <form:label path="fullname" for="name"><i class="zmdi zmdi-account material-icons-name"></i></form:label>

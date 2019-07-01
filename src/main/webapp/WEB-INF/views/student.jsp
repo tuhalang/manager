@@ -100,11 +100,13 @@
             <div>
                 <div class="popupCloseButton">X</div>
                 <div id="content-popup">
-
+                        hello
 
                 </div>
             </div>
         </div>
+
+        <div class="loader"></div>
 
     </div>
 </section>

@@ -59,6 +59,7 @@ public class AdminController {
             UserType userType = userTypeService.getByName("teacher");
             List<User> listUsers = userService.getAllUser(userType);
             modelMap.addAttribute("teachers", listUsers);
+            modelMap.addAttribute("newUser", new User());
             return "admin_teacher";
         }
         return "index";
@@ -71,6 +72,7 @@ public class AdminController {
             UserType userType = userTypeService.getByName("student");
             List<User> listUsers = userService.getAllUser(userType);
             modelMap.addAttribute("students", listUsers);
+            modelMap.addAttribute("newUser", new User());
             return "admin_student";
         }
         return "index";

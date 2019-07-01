@@ -17,6 +17,22 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!-- Map all requests to the DispatcherServlet for handling -->
     <servlet-mapping>
         <servlet-name>springDispatcherServlet</servlet-name>
