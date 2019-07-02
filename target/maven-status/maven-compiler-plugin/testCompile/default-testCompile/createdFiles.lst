@@ -1,2 +1,4 @@
 controller/AdminControllerTest.class
+controller/StudentControllerTest.class
 controller/LoginControllerTest.class
+controller/TeacherControllerTest.class

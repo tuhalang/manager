@@ -71,6 +71,16 @@ public class Course implements Serializable {
         this.status = 1;
     }
 
+    public Course(String courseName, int numOfLesson, double fee, double promotion, String type) {
+
+        this.courseName = courseName;
+        this.numOfLesson = numOfLesson;
+        this.fee = fee;
+        this.promotion = promotion;
+        this.courseType = new CourseType(type);
+        this.status = 1;
+    }
+
     public Course(String courseName, Date startDate, Date endDate, int numOfLesson, double fee, double promotion,
                   String type, String uname) {
         User user = new User(uname);

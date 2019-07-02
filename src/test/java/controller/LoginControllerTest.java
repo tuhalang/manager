@@ -1,6 +1,7 @@
 package controller;
 
 import entities.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 
@@ -24,9 +26,15 @@ public class LoginControllerTest {
     @Autowired
     LoginController loginController;
 
+    private MockMvc mockMvc;
+
+    @Before
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+    }
+
     @Test
-    public void loginTest(){
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+    public void loginSuccessTest(){
         try {
             mockMvc.perform(post("/login")
                     .param("username", "admin")
@@ -38,8 +46,20 @@ public class LoginControllerTest {
     }
 
     @Test
+    public void loginFailedTest(){
+        try {
+            mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("login"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void registerTest(){
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+        //MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
         try {
             mockMvc.perform(post("/submit-register")
                     .param("username", "junit")
