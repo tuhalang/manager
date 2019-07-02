@@ -31,7 +31,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <!-- Spring Web -->
@@ -54,6 +54,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- jsp-api -->
