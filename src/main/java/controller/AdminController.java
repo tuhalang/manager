@@ -2,10 +2,7 @@ package controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import entities.Course;
-import entities.CourseType;
-import entities.User;
-import entities.UserType;
+import entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,18 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import service.CourseService;
-import service.CourseTypeService;
-import service.UserService;
-import service.UserTypeService;
+import service.*;
 import utils.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -43,11 +34,23 @@ public class AdminController {
     @Autowired
     CourseService courseService;
 
+    @Autowired
+    BillService billService;
+
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String Default(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (user != null && user.getUserType().getType().equalsIgnoreCase("admin")) {
             return "admin";
+        }
+        return "index";
+    }
+
+    @RequestMapping(value = "admin/fee", method = RequestMethod.GET)
+    public String payment(HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null && user.getUserType().getType().equalsIgnoreCase("admin")) {
+            return "payment";
         }
         return "index";
     }
@@ -309,4 +312,42 @@ public class AdminController {
         System.out.println(listUsers.toString());
         return listUsers.toString();
     }
+
+
+    @RequestMapping(value = "api/payment/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String loadPaymentList(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        User user = userService.getUserById(userId);
+        return user.getListCourses().toString();
+    }
+
+    @RequestMapping(value = "api/payment/history", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String loadPaymentHistory(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        User user = userService.getUserById(userId);
+        return user.getListBills().toString();
+    }
+
+    @RequestMapping(value = "api/payment", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String payment(HttpSession httpSession,HttpServletRequest request){
+        User admin = (User) httpSession.getAttribute("user");
+        if(admin.getUserType().getType().equalsIgnoreCase("admin")){
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int paid = Integer.parseInt(request.getParameter("paid"));
+            User user = userService.getUserById(userId);
+            Bill bill = new Bill();
+            bill.setDate(new Date());
+            bill.setUser(user);
+            bill.setPaid(paid);
+            if(billService.save(bill)){
+                return "Nộp tiền thành công";
+            }
+        }
+        return "false";
+    }
+
+
 }

@@ -51,6 +51,8 @@ public class User implements Serializable {
     @JoinColumn(name = "user_type_id")
     private UserType userType;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.MERGE)
+    private Set<Bill> listBills = new HashSet<>();
 
     public User() {
         super();
@@ -159,6 +161,14 @@ public class User implements Serializable {
 
     public void setListCourses(Set<Course> listCourses) {
         this.listCourses = listCourses;
+    }
+
+    public Set<Bill> getListBills() {
+        return listBills;
+    }
+
+    public void setListBills(Set<Bill> listBills) {
+        this.listBills = listBills;
     }
 
     @Override

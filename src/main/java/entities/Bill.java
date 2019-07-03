@@ -1,36 +1,38 @@
 package entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name="bill")
-public class Bill {
+public class Bill implements Serializable {
 
     @Id
     @Column(name="bill_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int billId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-
-    @OneToOne
-    @JoinColumn(name="course_id")
-    private Course course;
 
     @Column(name="paid")
     private float paid;
 
-    @Column(name="lack")
-    private float lack;
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
 
     public int getBillId() {
         return billId;
     }
 
-    public void setBillId(int feeId) {
-        this.billId = feeId;
+    public void setBillId(int billId) {
+        this.billId = billId;
     }
 
     public User getUser() {
@@ -41,14 +43,6 @@ public class Bill {
         this.user = user;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
     public float getPaid() {
         return paid;
     }
@@ -57,11 +51,20 @@ public class Bill {
         this.paid = paid;
     }
 
-    public float getLack() {
-        return lack;
+    public Date getDate() {
+        return date;
     }
 
-    public void setLack(float lack) {
-        this.lack = lack;
+    public void setDate(Date date) {
+        this.date = date;
     }
+
+    @Override
+    public String toString(){
+        return "{\"billId\":\"" + billId + "\"," +
+                "\"paid\":" + paid + "," +
+                "\"date\":\"" + date + "\"" +
+                "}";
+    }
+
 }
