@@ -1,6 +1,7 @@
 package controller;
 
 import entities.Course;
+import entities.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,6 @@ import service.UserService;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -40,7 +40,30 @@ public class AdminControllerTest {
 
     @Test
     public void createNewAccountTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
 
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+                    .param("username", "junit-teacher")
+                    .param("password", "1234567")
+                    .param("fullname", "Junit Tescher")
+                    .flashAttr("newUser", new User()))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
