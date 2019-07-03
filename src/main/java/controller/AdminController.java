@@ -95,7 +95,7 @@ public class AdminController {
         return new ModelAndView("index");
     }
 
-    @RequestMapping(value = "api/create_new_course", method = RequestMethod.POST)
+    @RequestMapping(value = "api/create_new_course", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     public Course createNewCourse(HttpSession httpSession, @ModelAttribute Course course, BindingResult result) {
         User user = (User) httpSession.getAttribute("user");
@@ -113,7 +113,7 @@ public class AdminController {
         return null;
     }
 
-    @RequestMapping(value = "api/create_new_account", method = RequestMethod.POST)
+    @RequestMapping(value = "api/create_new_account", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     public User createNewAccount(@ModelAttribute User newUser, BindingResult result) {
         if(!result.hasErrors()){
@@ -129,7 +129,7 @@ public class AdminController {
         return null;
     }
 
-    @RequestMapping(value = "api/add_teacher", method = RequestMethod.GET)
+    @RequestMapping(value = "api/add_teacher", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String addTeacher(HttpSession httpSession, HttpServletRequest request) {
         int teacherId = Integer.parseInt(request.getParameter("teacher_id"));
@@ -146,7 +146,7 @@ public class AdminController {
     }
 
 
-    @RequestMapping(value = "api/load_dropdown", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_dropdown", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadDropdown() {
 
@@ -162,7 +162,7 @@ public class AdminController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/load_course", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_course", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadAllCourse(HttpServletRequest request) {
         int typeId = Integer.parseInt(request.getParameter("type_id"));
@@ -186,7 +186,7 @@ public class AdminController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/get_total_course", method = RequestMethod.GET)
+    @RequestMapping(value = "api/get_total_course", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getTotalCourse(HttpServletRequest request) {
         int typeId = Integer.parseInt(request.getParameter("type_id"));
@@ -203,7 +203,7 @@ public class AdminController {
         return total +"";
     }
 
-    @RequestMapping(value = "api/load_student", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_student", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadAllStudent() {
         ObjectMapper mapper = new ObjectMapper();
@@ -219,7 +219,7 @@ public class AdminController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/get_list_course_by_students", method = RequestMethod.GET)
+    @RequestMapping(value = "api/get_list_course_by_students", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getListCourseByStudents(HttpServletRequest request) {
         String[] listId = request.getParameter("list_id").split(",");
@@ -240,7 +240,7 @@ public class AdminController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/get_total_course_by_students", method = RequestMethod.GET)
+    @RequestMapping(value = "api/get_total_course_by_students", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getTotalCourseByStudents(HttpServletRequest request) {
         String[] listId = request.getParameter("list_id").split(",");
@@ -253,7 +253,7 @@ public class AdminController {
     }
 
 
-    @RequestMapping(value = "api/get_students", method = RequestMethod.GET)
+    @RequestMapping(value = "api/get_students", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getStudents(HttpServletRequest request) {
         String[] listId = request.getParameter("list_id").split(",");
@@ -273,7 +273,7 @@ public class AdminController {
         return data;
     }
 
-    @RequestMapping(value = "api/block_user", method = RequestMethod.GET)
+    @RequestMapping(value = "api/block_user", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String blockUser(HttpServletRequest request) {
         int userId = Integer.parseInt(request.getParameter("userId"));
@@ -287,7 +287,7 @@ public class AdminController {
         return "failed";
     }
 
-    @RequestMapping(value = "api/search_user", method = RequestMethod.GET)
+    @RequestMapping(value = "api/search_user", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String searchUser(HttpServletRequest request) {
         int userTypeId = Integer.parseInt(request.getParameter("userTypeId"));

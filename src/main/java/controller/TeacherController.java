@@ -62,7 +62,7 @@ public class TeacherController {
         return new ModelAndView("index");
     }
 
-    @PostMapping(value = "api/save_course")
+    @PostMapping(value = "api/save_course", produces = "application/json; charset=utf-8")
     @ResponseBody
     public Course submitNewCourse(HttpSession httpSession, @ModelAttribute Course course, BindingResult result){
 
@@ -79,7 +79,7 @@ public class TeacherController {
         return null;
     }
 
-    @RequestMapping(value = "api/save_lesson", method = RequestMethod.GET)
+    @RequestMapping(value = "api/save_lesson", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public Lesson submitNewLesson(HttpServletRequest request){
 
@@ -164,7 +164,7 @@ public class TeacherController {
         return "index";
     }
 
-    @RequestMapping(value = "api/load_lessons", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_lessons", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadLessons(HttpServletRequest request) {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
@@ -180,7 +180,7 @@ public class TeacherController {
     }
 
 
-    @RequestMapping(value = "api/load_students_of_lesson", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_students_of_lesson", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadStudentOfLesson(HttpServletRequest request) {
         int lessonId = Integer.parseInt(request.getParameter("lessonId"));
@@ -196,7 +196,7 @@ public class TeacherController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/load_students_of_course", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_students_of_course", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadStudentOfCourse(HttpServletRequest request) {
         int lessonId = Integer.parseInt(request.getParameter("lessonId"));
@@ -218,7 +218,7 @@ public class TeacherController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/roll_up", method = RequestMethod.GET)
+    @RequestMapping(value = "api/roll_up", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String roll_up(HttpServletRequest request) {
         int userId = Integer.parseInt(request.getParameter("userId"));
@@ -232,7 +232,7 @@ public class TeacherController {
         return "success";
     }
 
-    @RequestMapping(value = "api/load_info_lessons", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_info_lessons", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadInfoLesson(HttpServletRequest request) {
         int lessonId = Integer.parseInt(request.getParameter("lessonId"));

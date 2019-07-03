@@ -64,7 +64,7 @@ public class StudentController {
         return "index";
     }
 
-    @RequestMapping(value = "api/load_course_of_student", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_course_of_student", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadCourseOfStudent(HttpServletRequest request, HttpSession httpSession) {
 
@@ -79,7 +79,7 @@ public class StudentController {
         return listCourses.toString();
     }
 
-    @RequestMapping(value = "api/search_course", method = RequestMethod.GET)
+    @RequestMapping(value = "api/search_course", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String searchCourse(HttpServletRequest request, HttpSession httpSession) {
         String type = request.getParameter("type");
@@ -98,7 +98,7 @@ public class StudentController {
     }
 
 
-    @RequestMapping(value = "api/load_schedule", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_schedule", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadSchedule(HttpServletRequest request, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -119,7 +119,7 @@ public class StudentController {
         return ajaxResponse;
     }
 
-    @RequestMapping(value = "api/load_course_short", method = RequestMethod.GET)
+    @RequestMapping(value = "api/load_course_short", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String loadCourseShort(HttpServletRequest request, HttpSession httpSession) {
 
@@ -138,7 +138,7 @@ public class StudentController {
         return response;
     }
 
-    @RequestMapping(value = "api/enroll", method = RequestMethod.GET)
+    @RequestMapping(value = "api/enroll", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String enroll(HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         User user = (User) httpSession.getAttribute("user");
@@ -162,7 +162,7 @@ public class StudentController {
         return "Enroll failed !";
     }
 
-    @RequestMapping(value = "api/show_course_detail", method = RequestMethod.GET)
+    @RequestMapping(value = "api/show_course_detail", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String showDetailCourse(HttpServletRequest request, HttpSession httpSession) {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
