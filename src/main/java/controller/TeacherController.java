@@ -148,9 +148,15 @@ public class TeacherController {
         if (user != null && user.getUserType().getType().equalsIgnoreCase("teacher")) {
             if (!result.hasErrors()) {
                 Course course1 = courseService.getById(course.getCourseId());
-                course.setListUsers(course1.getListUsers());
-                course.setListLessons(course1.getListLessons());
-                if (courseService.update(course)) {
+                course1.setCourseName(course.getCourseName());
+                course1.setStatus(course.getStatus());
+                course1.setCourseType(course.getCourseType());
+                course1.setEndDate(course.getEndDate());
+                course1.setFee(course.getFee());
+                course1.setNumOfLesson(course.getNumOfLesson());
+                course1.setStartDate(course.getStartDate());
+                course1.setPromotion(course.getPromotion());
+                if (courseService.update(course1)) {
                     model.addAttribute("success", "Update successfully !!!");
                     return "redirect:edit_course?id=" + course.getCourseId();
                 }

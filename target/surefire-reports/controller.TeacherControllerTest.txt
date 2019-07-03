@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: controller.TeacherControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.388 s <<< FAILURE! - in controller.TeacherControllerTest
+updateCourseTest(controller.TeacherControllerTest)  Time elapsed: 0.387 s  <<< FAILURE!
+java.lang.AssertionError: 
+Model attribute 'success'
+Expected: "Update successfully !!!"
+     but: was null
+	at controller.TeacherControllerTest.updateCourseTest(TeacherControllerTest.java:62)
+

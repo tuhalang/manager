@@ -23,7 +23,7 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "lesson_id")})
     Set<Lesson> listLessons = new HashSet<Lesson>();
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "course_detail",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
