@@ -17,6 +17,7 @@ import service.UserService;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -91,6 +92,32 @@ public class AdminControllerTest {
                     .param("promotion","0")
                     .param("courseType","seminar")
                     .flashAttr("course", new Course()))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void payment(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(get("/api/payment")
+                    .session((MockHttpSession) session)
+                    .param("paid","100")
+                    .param("userId","6"))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/json;charset=UTF-8"));
         } catch (Exception e) {

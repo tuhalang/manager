@@ -15,6 +15,7 @@ service/impl/CourseServiceImpl.class
 dao/CourseTypeDAO.class
 dao/impl/UserDAOImpl.class
 utils/ReadCSV.class
+dao/BillDAO.class
 service/impl/UserTypeServiceImpl.class
 dao/impl/CourseDAOImpl.class
 controller/CourseDetailController.class
@@ -22,10 +23,12 @@ dao/UserTypeDAO.class
 entities/Course.class
 service/impl/UserServiceImpl.class
 controller/AccountController.class
+dao/impl/BillDAOImpl.class
 service/LessonService.class
 entities/Bill.class
 controller/StudentController.class
 dao/impl/LessonDAOImpl.class
+service/impl/BillServiceImpl.class
 entities/UserType.class
 dao/LessonDAO.class
 dao/UserDAO.class
@@ -34,3 +37,4 @@ service/UserService.class
 utils/Mail.class
 controller/HomeController.class
 dao/CourseDAO.class
+service/BillService.class
