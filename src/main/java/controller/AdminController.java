@@ -344,20 +344,42 @@ public class AdminController {
     public String payment(HttpSession httpSession,HttpServletRequest request){
         User admin = (User) httpSession.getAttribute("user");
         if(admin.getUserType().getType().equalsIgnoreCase("admin")){
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            int paid = Integer.parseInt(request.getParameter("paid"));
+            String strUserId = request.getParameter("userId");
+            String strPaid = request.getParameter("paid");
+
+            if(strPaid.equalsIgnoreCase("") || strUserId.equalsIgnoreCase("")){
+                logger.error("field null");
+                return "field null";
+            }
+            int userId=-1;
+            int paid=-1;
+            try{
+                userId = Integer.parseInt(strUserId);
+                paid = Integer.parseInt(strPaid);
+            }catch (NumberFormatException e){
+                logger.error(e.getMessage());
+            }
+
+
             if(paid <= 0){
                 logger.error("negative paid");
-                return "false";
+                return "negative paid";
             }
+
             User user = userService.getUserById(userId);
-            Bill bill = new Bill();
-            bill.setDate(new Date());
-            bill.setUser(user);
-            bill.setPaid(paid);
-            if(billService.save(bill)){
-                return "Nộp tiền thành công";
+            if(user != null){
+                Bill bill = new Bill();
+                bill.setDate(new Date());
+                bill.setUser(user);
+                bill.setPaid(paid);
+                if(billService.save(bill)){
+                    return "success";
+                }
+            }else{
+                logger.error("user null");
+                return "user null";
             }
+
         }
         return "false";
     }

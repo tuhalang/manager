@@ -2,7 +2,6 @@ package controller;
 
 import entities.Course;
 import entities.User;
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import service.UserService;
 
@@ -434,12 +434,110 @@ public class AdminControllerTest {
             Assert.assertNotNull(session);
 
             this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
-            mockMvc.perform(get("/api/payment")
+            MvcResult mvcResult = mockMvc.perform(get("/api/payment")
                     .session((MockHttpSession) session)
                     .param("paid","100")
                     .param("userId","6"))
                     .andExpect(status().isOk())
-                    .andExpect(content().contentType("application/json;charset=UTF-8"));
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+            String response = mvcResult.getResponse().getContentAsString();
+            Assert.assertEquals(response,"success");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void paymentNegative(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            MvcResult result = mockMvc.perform(get("/api/payment")
+                    .session((MockHttpSession) session)
+                    .param("paid","-19")
+                    .param("userId","6"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+            Assert.assertEquals(logger.getLevel(), Level.ERROR);
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals(response,"negative paid");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void paymentNull(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            MvcResult result = mockMvc.perform(get("/api/payment")
+                    .session((MockHttpSession) session)
+                    .param("paid","")
+                    .param("userId","6"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+            Assert.assertEquals(logger.getLevel(), Level.ERROR);
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals(response,"field null");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void paymentNotUser(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            MvcResult result = mockMvc.perform(get("/api/payment")
+                    .session((MockHttpSession) session)
+                    .param("paid","100")
+                    .param("userId","200"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+            Assert.assertEquals(logger.getLevel(), Level.ERROR);
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals(response,"user null");
         } catch (Exception e) {
             e.printStackTrace();
         }

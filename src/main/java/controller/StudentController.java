@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Course;
 import entities.Lesson;
 import entities.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,8 @@ import java.util.Set;
 
 @Controller
 public class StudentController {
+
+    private static final Logger logger = LogManager.getLogger(StudentController.class.getName());
 
     @Autowired
     LessonService lessonService;
@@ -102,7 +106,14 @@ public class StudentController {
     @ResponseBody
     public String loadSchedule(HttpServletRequest request, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        int type = Integer.parseInt(request.getParameter("type"));
+        int type=0;
+        try{
+            type = Integer.parseInt(request.getParameter("type"));
+        }catch (NumberFormatException e){
+            logger.error(e.getMessage());
+            return null;
+        }
+
         List<Lesson> listLessons = new ArrayList<Lesson>();
         if (type == 0) {
             listLessons = lessonService.getLessonInWeek(user.getUserId());

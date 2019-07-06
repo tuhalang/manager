@@ -4,6 +4,8 @@ import dao.UserDAO;
 import dao.UserTypeDAO;
 import entities.User;
 import entities.UserType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,6 +20,8 @@ import java.util.List;
 @Repository
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserDAOImpl implements UserDAO {
+
+    private static final Logger logger = LogManager.getLogger(UserDAOImpl.class.getName());
 
     @Autowired
     SessionFactory sessionFactory;
@@ -43,11 +47,11 @@ public class UserDAOImpl implements UserDAO {
                 }
 
             } else {
-                System.out.println("Username is exist!");
+                logger.error("username is exits");
                 return false;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             return false;
         }
 

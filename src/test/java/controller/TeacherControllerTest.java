@@ -53,7 +53,7 @@ public class TeacherControllerTest {
             mockMvc.perform(post("/update_course")
                     .session((MockHttpSession) session)
                     .param("courseId","1")
-                    .param("courseName","Junit Test")
+                    .param("courseName","afdsadas")
                     .param("numOfLesson","10")
                     .param("startDate","2019-06-05")
                     .param("endDate", "2019-06-10")

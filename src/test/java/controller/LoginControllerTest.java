@@ -96,4 +96,52 @@ public class LoginControllerTest {
         }
 
     }
+
+    @Test
+    public void registerMissUsernameTest(){
+        //MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+        try {
+            mockMvc.perform(post("/submit-register")
+                    .param("username", "")
+                    .param("password", "1234567")
+                    .param("fullname", "Junit Test")
+                    .flashAttr("user", new User()))
+                    .andExpect(forwardedUrl("register"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void registerMissPasswordTest(){
+        //MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+        try {
+            mockMvc.perform(post("/submit-register")
+                    .param("username", "sdasdsa")
+                    .param("password", "")
+                    .param("fullname", "Junit Test")
+                    .flashAttr("user", new User()))
+                    .andExpect(forwardedUrl("register"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void registerMissFullnameTest(){
+        //MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+        try {
+            mockMvc.perform(post("/submit-register")
+                    .param("username", "sadsad")
+                    .param("password", "1234567")
+                    .param("fullname", "")
+                    .flashAttr("user", new User()))
+                    .andExpect(forwardedUrl("register"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

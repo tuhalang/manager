@@ -63,7 +63,9 @@ public class LoginController {
         UserType userType = userTypeService.getByName("student");
         user.setUserType(userType);
         user.setStatus(1);
-        if (!result.hasErrors()) {
+        user.setEmail(user.getFullname()+"@gmail.com");
+        user.setPhone("1234567890");
+        if (!result.hasErrors() && userService.validate(user)) {
             if (userService.save(user)) {
                 model.addAttribute("info", "register successfully!, please login!");
                 return "login";
