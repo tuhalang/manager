@@ -58,6 +58,30 @@ public class LoginControllerTest {
     }
 
     @Test
+    public void loginMissPassTest(){
+        try {
+            mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", ""))
+                    .andExpect(redirectedUrl("login"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void loginMissUsernameTest(){
+        try {
+            mockMvc.perform(post("/login")
+                    .param("username", "")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("login"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void registerTest(){
         //MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
         try {

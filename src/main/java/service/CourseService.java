@@ -5,6 +5,9 @@ import entities.Course;
 import java.util.List;
 
 public interface CourseService {
+
+    boolean validate(Course course);
+
     List<Course> getAll();
     List<Course> getAll(int start, int max);
     long getTotal();

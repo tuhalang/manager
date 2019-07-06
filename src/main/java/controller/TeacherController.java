@@ -115,12 +115,15 @@ public class TeacherController {
     public String submit(@ModelAttribute("course") Course course, BindingResult result, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (user != null && user.getUserType().getType().equalsIgnoreCase("teacher")) {
-            courseService.save(course);
-            Set<Course> courses = user.getListCourses();
-            courses.add(course);
-            user.setListCourses(courses);
-            userService.update(user);
-            return "redirect:teacher";
+            if(courseService.validate(course)){
+                courseService.save(course);
+                Set<Course> courses = user.getListCourses();
+                courses.add(course);
+                user.setListCourses(courses);
+                userService.update(user);
+                return "redirect:teacher";
+            }
+            return "new_course";
         } else {
             return "index";
         }
@@ -146,7 +149,7 @@ public class TeacherController {
                                BindingResult result, ModelMap model) {
         User user = (User) httpSession.getAttribute("user");
         if (user != null && user.getUserType().getType().equalsIgnoreCase("teacher")) {
-            if (!result.hasErrors()) {
+            if (!result.hasErrors() && courseService.validate(course)) {
                 Course course1 = courseService.getById(course.getCourseId());
                 course1.setCourseName(course.getCourseName());
                 course1.setStatus(course.getStatus());
@@ -164,7 +167,8 @@ public class TeacherController {
                 model.addAttribute("error", "Can't update, please try again !!!");
                 return "redirect:edit_course?id=" + course.getCourseId();
             } else {
-                return "index";
+                model.addAttribute("error", "Can't update, please try again !!!");
+                return "redirect:edit_course?id=" + course.getCourseId();
             }
         }
         return "index";

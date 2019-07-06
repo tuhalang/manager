@@ -35,8 +35,7 @@ public class AccountController {
     @RequestMapping(value = "api/update_user", method = RequestMethod.POST)
     public User updateUser(HttpSession httpSession, @ModelAttribute(name="account") User account, BindingResult result){
         User current_user = (User) httpSession.getAttribute("user");
-        if(current_user != null && !result.hasErrors()){
-            System.out.println(account.toString());
+        if(current_user != null && !result.hasErrors() && userService.validate(account)){
             current_user.setUsername(account.getUsername());
             current_user.setFullname(account.getFullname());
             current_user.setEmail(account.getEmail());
@@ -55,15 +54,13 @@ public class AccountController {
         User current_user = (User) httpSession.getAttribute("user");
         String old_pass = request.getParameter("old_pass");
         String new_pass = request.getParameter("new_pass");
-        System.out.println(old_pass);
-        System.out.println(new_pass);
-        if(old_pass.equals(current_user.getPassword())){
+
+        if(old_pass.equals(current_user.getPassword()) && new_pass.length()>5){
             current_user.setPassword(new_pass);
             if(userService.update(current_user)){
                 return "success";
             }
         }
-
         return "failed";
     }
 }

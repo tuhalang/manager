@@ -2,6 +2,8 @@ package service.impl;
 
 import dao.CourseDAO;
 import entities.Course;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import service.CourseService;
@@ -11,8 +13,39 @@ import java.util.List;
 @Controller
 public class CourseServiceImpl implements CourseService {
 
+    private static final Logger logger = LogManager.getLogger(CourseServiceImpl.class.getName());
+
     @Autowired
     CourseDAO courseDAO;
+
+    @Override
+    public boolean validate(Course course) {
+        if(course.getCourseName().equalsIgnoreCase("")){
+            logger.error("invalid name");
+            return false;
+        }
+
+        if(course.getFee() < 0){
+            logger.error("invalid fee");
+            return false;
+        }
+
+        if(course.getStartDate() == null || course.getEndDate() == null){
+            logger.error("date null");
+        }
+
+        if(course.getStartDate().getTime() > course.getEndDate().getTime()){
+            logger.error("invalid date");
+            return false;
+        }
+
+        if (course.getCourseType() == null){
+            logger.error("CourseType null");
+            return false;
+        }
+
+        return true;
+    }
 
     @Override
     public List<Course> getAll() {

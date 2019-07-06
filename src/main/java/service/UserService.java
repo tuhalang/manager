@@ -6,6 +6,8 @@ import entities.UserType;
 import java.util.List;
 
 public interface UserService {
+    boolean validate(User user);
+
     boolean save(User user);
 
     boolean update(User user);

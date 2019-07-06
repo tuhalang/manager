@@ -3,6 +3,8 @@ package controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,8 @@ import java.util.*;
 
 @Controller
 public class AdminController {
+
+    private static final Logger logger = LogManager.getLogger(AdminController.class.getName());
 
     @Autowired
     CourseTypeService courseTypeService;
@@ -104,13 +108,12 @@ public class AdminController {
         User user = (User) httpSession.getAttribute("user");
         if(user.getUserType().getType().equalsIgnoreCase("admin")){
             if(!result.hasErrors()){
-                if (courseService.save(course)) {
+                if (courseService.validate(course) && courseService.save(course)) {
                     return course;
                 }
             }
             else {
-                System.out.println("ERROR");
-                System.out.println(result.getFieldErrors());
+                logger.error(result.getFieldErrors());
             }
         }
         return null;
@@ -118,16 +121,21 @@ public class AdminController {
 
     @RequestMapping(value = "api/create_new_account", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public User createNewAccount(@ModelAttribute User newUser, BindingResult result) {
-        if(!result.hasErrors()){
-            UserType userType = userTypeService.getByName("teacher");
-            newUser.setStatus(1);
-            newUser.setUserType(userType);
-            if(userService.save(newUser)){
-                return newUser;
+    public User createNewAccount(HttpSession httpSession, @ModelAttribute User newUser, BindingResult result) {
+        User user = (User) httpSession.getAttribute("user");
+        if(user.getUserType().getType().equalsIgnoreCase("admin")){
+            if(!result.hasErrors()){
+                UserType userType = userTypeService.getByName("teacher");
+                newUser.setEmail(newUser.getUsername()+"@gmail.com");
+                newUser.setPhone("0123456789");
+                newUser.setStatus(1);
+                newUser.setUserType(userType);
+                if(userService.validate(newUser) && userService.save(newUser)){
+                    return newUser;
+                }
+            }else{
+                logger.error(result.getFieldErrors());
             }
-        }else{
-            System.out.println(result.getFieldErrors());
         }
         return null;
     }
@@ -135,15 +143,18 @@ public class AdminController {
     @RequestMapping(value = "api/add_teacher", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String addTeacher(HttpSession httpSession, HttpServletRequest request) {
-        int teacherId = Integer.parseInt(request.getParameter("teacher_id"));
-        int courseId = Integer.parseInt(request.getParameter("course_id"));
-        User user = userService.getUserById(teacherId);
-        Set<User> users = new HashSet<>();
-        users.add(user);
-        Course course = courseService.getById(courseId);
-        course.setListUsers(users);
-        if(courseService.update(course)){
-            return "success";
+        User user = (User) httpSession.getAttribute("user");
+        if(user.getUserType().getType().equalsIgnoreCase("admin")){
+            int teacherId = Integer.parseInt(request.getParameter("teacher_id"));
+            int courseId = Integer.parseInt(request.getParameter("course_id"));
+            User teacher = userService.getUserById(teacherId);
+            Set<User> users = new HashSet<>();
+            users.add(teacher);
+            Course course = courseService.getById(courseId);
+            course.setListUsers(users);
+            if(courseService.update(course)){
+                return "success";
+            }
         }
         return "failed";
     }
@@ -159,7 +170,7 @@ public class AdminController {
         try {
             ajaxResponse = mapper.writeValueAsString(listType);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return ajaxResponse;
@@ -184,7 +195,7 @@ public class AdminController {
         try {
             ajaxResponse = mapper.writeValueAsString(listCourse);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return ajaxResponse;
     }
@@ -216,7 +227,7 @@ public class AdminController {
         try {
             ajaxResponse = mapper.writeValueAsString(listStudents);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return ajaxResponse;
@@ -238,7 +249,7 @@ public class AdminController {
             ajaxResponse = mapper.writeValueAsString(new Collection<Course>().subCollection(
                     new ArrayList<>(listCourses),page*8, 8));
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());;
         }
         return ajaxResponse;
     }
@@ -308,8 +319,6 @@ public class AdminController {
         }else{
             listUsers = userService.searchByName(userTypeId, name);
         }
-
-        System.out.println(listUsers.toString());
         return listUsers.toString();
     }
 
@@ -337,6 +346,10 @@ public class AdminController {
         if(admin.getUserType().getType().equalsIgnoreCase("admin")){
             int userId = Integer.parseInt(request.getParameter("userId"));
             int paid = Integer.parseInt(request.getParameter("paid"));
+            if(paid <= 0){
+                logger.error("negative paid");
+                return "false";
+            }
             User user = userService.getUserById(userId);
             Bill bill = new Bill();
             bill.setDate(new Date());

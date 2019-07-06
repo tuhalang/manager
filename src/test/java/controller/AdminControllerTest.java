@@ -2,7 +2,12 @@ package controller;
 
 import entities.Course;
 import entities.User;
+import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +34,7 @@ public class AdminControllerTest {
 
 
     private MockMvc mockMvc;
+    private Logger logger;
 
     @Autowired
     AdminController adminController;
@@ -38,6 +44,11 @@ public class AdminControllerTest {
 
     @Autowired
     UserService userService;
+
+    @Before
+    public void setup(){
+        logger = LogManager.getLogger(AdminControllerTest.class.getName());
+    }
 
     @Test
     public void createNewAccountTest(){
@@ -59,9 +70,188 @@ public class AdminControllerTest {
                     .param("username", "junit-teacher")
                     .param("password", "1234567")
                     .param("fullname", "Junit Tescher")
+                    .param("phone", "234567890")
                     .flashAttr("newUser", new User()))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/json;charset=UTF-8"));
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewAccountMissingEmailTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+                    .param("username", "junit-teacher")
+                    .param("password", "1234567")
+                    .param("fullname", "Junit Tescher")
+                    .param("phone", "234567890")
+                    .flashAttr("newUser", new User()));
+            Assert.assertEquals(Level.ERROR, logger.getLevel());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewAccountMissingUsernameTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+
+                    .param("password", "1234567")
+                    .param("fullname", "Junit Tescher")
+                    .param("phone", "234567890")
+                    .param("email", "abc@gmail.com")
+                    .flashAttr("newUser", new User()));
+            Assert.assertEquals(Level.ERROR, logger.getLevel());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewAccountMissingPasswordTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+                    .param("username", "junit-teacher")
+                    .param("fullname", "Junit Tescher")
+                    .param("phone", "234567890")
+                    .param("email", "abc@gmail.com")
+                    .flashAttr("newUser", new User()));
+            Assert.assertEquals(Level.ERROR, logger.getLevel());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewAccountMissingFullnameTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+                    .param("username", "junit-teacher")
+                    .param("password", "1234567")
+                    .param("phone", "234567890")
+                    .param("email", "abc@gmail.com")
+                    .flashAttr("newUser", new User()));
+            Assert.assertEquals(Level.ERROR, logger.getLevel());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewAccountMissingPhoneTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+                    .param("username", "junit-teacher")
+                    .param("password", "1234567")
+                    .param("fullname", "Junit Tescher")
+                    .param("email", "abc@gmail.com")
+                    .flashAttr("newUser", new User()));
+            Assert.assertEquals(Level.ERROR, logger.getLevel());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewAccountPassShortTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_account")
+                    .session((MockHttpSession) session)
+                    .param("username", "junit-teacher")
+                    .param("password", "1234")
+                    .param("fullname", "Junit Tescher")
+                    .param("email", "abc@gmail.com")
+                    .param("phone", "1234567890")
+                    .flashAttr("newUser", new User()));
+            Assert.assertEquals(Level.ERROR, logger.getLevel());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,6 +288,136 @@ public class AdminControllerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void createNewCourseMissNameTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_course")
+                    .session((MockHttpSession) session)
+                    .param("numOfLesson","10")
+                    .param("startDate","2019-06-05")
+                    .param("endDate", "2019-06-10")
+                    .param("fee","0")
+                    .param("promotion","0")
+                    .param("courseType","seminar"));
+
+            Assert.assertEquals(logger.getLevel(),Level.ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createNewCourseMinusNumTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_course")
+                    .session((MockHttpSession) session)
+                    .param("courseName","Junit Test")
+                    .param("numOfLesson","-4")
+                    .param("startDate","2019-06-05")
+                    .param("endDate", "2019-06-10")
+                    .param("fee","0")
+                    .param("promotion","0")
+                    .param("courseType","seminar"));
+
+            Assert.assertEquals(logger.getLevel(),Level.ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void createNewCourseDateTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_course")
+                    .session((MockHttpSession) session)
+                    .param("courseName","Junit Test")
+                    .param("numOfLesson","10")
+                    .param("endDate", "2019-06-10")
+                    .param("startDate", "2019-06-6")
+                    .param("fee","0")
+                    .param("promotion","0")
+                    .param("courseType","seminar")
+                    .flashAttr("course", new Course()));
+
+            Assert.assertEquals(logger.getLevel(),Level.ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void createNewCourseMissDateTest(){
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "admin")
+                    .param("password", "1234567"))
+                    .andExpect(redirectedUrl("admin"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.adminController).build();
+            mockMvc.perform(post("/api/create_new_course")
+                    .session((MockHttpSession) session)
+                    .param("courseName","Junit Test")
+                    .param("numOfLesson","10")
+                    .param("endDate", "2019-06-10")
+                    .param("fee","0")
+                    .param("promotion","0")
+                    .param("courseType","seminar")
+                    .flashAttr("course", new Course()));
+
+            Assert.assertEquals(logger.getLevel(),Level.ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     @Test
     public void payment(){

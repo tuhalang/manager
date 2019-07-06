@@ -1,0 +1,30 @@
+
+[ERROR] 2019-07-05 15:07:29.361 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:09:32.591 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:22:23.282 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:22:23.360 [main] AdminControllerTest - invalid phone
+[ERROR] 2019-07-05 15:30:08.205 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:30:37.788 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:31:34.831 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:32:21.978 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:33:40.315 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:51:14.545 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:52:05.203 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:52:49.763 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:53:44.737 [main] UserServiceImpl - 
+[ERROR] 2019-07-05 15:53:44.745 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:55:04.840 [main] UserServiceImpl - 
+[ERROR] 2019-07-05 15:55:04.848 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:55:38.928 [main] UserServiceImpl - vanhung101299@gmail.com
+[ERROR] 2019-07-05 15:55:38.940 [main] UserServiceImpl - 
+[ERROR] 2019-07-05 15:55:38.940 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 15:57:39.282 [main] AdminController - {"userId":"0","username":"junit-teacher","fullname":"Junit Tescher","status":"1","courses":[],"userType":{"userTypeId":"2","type":"teacher"},"lessons":[],"totalTime":0.0}
+[ERROR] 2019-07-05 15:57:39.291 [main] UserServiceImpl - null
+[ERROR] 2019-07-05 16:00:39.194 [main] UserServiceImpl - 234567890
+[ERROR] 2019-07-05 16:00:39.201 [main] UserServiceImpl - invalid phone
+[ERROR] 2019-07-05 16:02:11.020 [main] UserServiceImpl - invalid email
+[ERROR] 2019-07-05 16:02:11.027 [main] UserServiceImpl - null
+[ERROR] 2019-07-05 16:11:24.260 [main] UserServiceImpl - password too short
+[ERROR] 2019-07-05 16:16:15.209 [main] UserServiceImpl - password too short
+[ERROR] 2019-07-05 16:19:36.993 [main] UserServiceImpl - password too short
+[ERROR] 2019-07-05 16:19:37.443 [main] CourseServiceImpl - date null

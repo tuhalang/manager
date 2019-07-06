@@ -2,6 +2,7 @@ package controller;
 
 import entities.User;
 import entities.UserType;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 @SessionAttributes("user")
 public class LoginController {
+
+    private static final Logger logger = Logger.getLogger(LoginController.class);
 
     @Autowired
     UserService userService;
@@ -43,7 +46,6 @@ public class LoginController {
         if (user != null) {
             if(user.getStatus()==1){
                 map.addAttribute("user", user);
-                System.out.println(user);
                 String page = "redirect:"+user.getUserType().getType();
                 return page;
             }else {
