@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: dao.UserDAOTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.378 s <<< FAILURE! - in dao.UserDAOTest
+saveUserExistTest(dao.UserDAOTest)  Time elapsed: 0.039 s  <<< FAILURE!
+java.lang.AssertionError: expected:<true> but was:<false>
+	at dao.UserDAOTest.saveUserExistTest(UserDAOTest.java:68)
+

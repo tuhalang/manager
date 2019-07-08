@@ -1,4 +1,6 @@
 /home/phamhung/IdeaProjects/manager/src/test/java/controller/StudentControllerTest.java
 /home/phamhung/IdeaProjects/manager/src/test/java/controller/LoginControllerTest.java
+/home/phamhung/IdeaProjects/manager/src/test/java/dao/UserDAOTest.java
 /home/phamhung/IdeaProjects/manager/src/test/java/controller/AdminControllerTest.java
 /home/phamhung/IdeaProjects/manager/src/test/java/controller/TeacherControllerTest.java
+/home/phamhung/IdeaProjects/manager/src/test/java/dao/CourseDAOTest.java

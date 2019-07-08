@@ -56,7 +56,7 @@ public class UserDAOTest {
     @Test
     public void saveUserExistTest(){
         User user = new User();
-        user.setUsername("abcdef");
+        user.setUsername("student1");
         user.setPassword("1234567");
         user.setFullname("abcdefghijk");
         user.setEmail("abc@gmail.com");
@@ -65,7 +65,7 @@ public class UserDAOTest {
         user.setUserType(new UserType("admin"));
         user.setStatus(1);
 
-        Assert.assertEquals(userDAO.save(user),false);
+        Assert.assertEquals(false, userDAO.save(user));
 
         Assert.assertEquals(logger.getLevel(), Level.ERROR);
 

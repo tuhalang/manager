@@ -154,21 +154,41 @@ public class StudentController {
     public String enroll(HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         User user = (User) httpSession.getAttribute("user");
         if (user != null && user.getUserType().getType().equalsIgnoreCase("student")) {
-            int courseId = Integer.parseInt(request.getParameter("courseId"));
-            Set<Course> courseSet = user.getListCourses();
-            Course course = courseService.getById(courseId);
-            courseSet.add(course);
-            user.setListCourses(courseSet);
-            if(userService.update(user)){
-                mail.sendMail(user.getEmail(), "Dang ki khoa hoc thanh cong!",
-                        "Cam on ban da dang ki khoa hoc " + course.getCourseName());
-                mail.sendMail(course.getTeacher().getEmail(), "Hoc vien dang ki khoa hoc",
-                        "Hoc vien " + user.getFullname() + " da dang ki khoa hoc " +  course.getCourseName());
-                return "Enroll successful !";
+            try{
+                int courseId = Integer.parseInt(request.getParameter("courseId"));
+
+                Course course = courseService.getById(courseId);
+                if(course != null ){
+                    Set<Course> courseSet = user.getListCourses();
+                    if(courseSet.contains(course)){
+                        return "you enrolled";
+                    }
+                    courseSet.add(course);
+                    user.setListCourses(courseSet);
+                    if(userService.update(user)){
+                        boolean sendUser = mail.sendMail(user.getEmail(), "Dang ki khoa hoc thanh cong!",
+                                "Cam on ban da dang ki khoa hoc " + course.getCourseName());
+                        boolean sendTeacher = mail.sendMail(course.getTeacher().getEmail(), "Hoc vien dang ki khoa hoc",
+                                "Hoc vien " + user.getFullname() + " da dang ki khoa hoc " +  course.getCourseName());
+                        if(sendUser && sendTeacher)
+                            return "Enroll successful!";
+                        if(sendUser)
+                            return "Enroll successful! but can't send mail for teacher";
+                        if(sendTeacher)
+                            return  "Enroll successful! but can't send mail for student";
+                    }
+                    else{
+                        return "Enroll failed !";
+                    }
+                }else{
+                    return "Not exists course";
+                }
+
+            }catch (NumberFormatException e){
+                logger.error(e.getMessage());
             }
-            else{
-                return "Enroll failed !";
-            }
+
+
         }
         return "Enroll failed !";
     }

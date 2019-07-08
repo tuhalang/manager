@@ -1,4 +1,6 @@
 controller/AdminControllerTest.class
 controller/StudentControllerTest.class
+dao/CourseDAOTest.class
+dao/UserDAOTest.class
 controller/LoginControllerTest.class
 controller/TeacherControllerTest.class

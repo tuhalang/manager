@@ -1,6 +1,5 @@
 package controller;
 
-import entities.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,22 +29,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring-servlet.xml")
 public class StudentControllerTest {
 
+    @Autowired
+    StudentController studentController;
+    @Autowired
+    LoginController loginController;
     private MockMvc mockMvc;
     private Logger logger;
 
-    @Autowired
-    StudentController studentController;
-
-    @Autowired
-    LoginController loginController;
-
     @Before
-    public void setup(){
+    public void setup() {
         logger = LogManager.getLogger(StudentControllerTest.class.getName());
     }
 
     @Test
-    public void createScheduleTypeNotANumberTest(){
+    public void createScheduleTypeNotANumberTest() {
         try {
             this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
             HttpSession session = mockMvc.perform(post("/login")
@@ -61,14 +58,14 @@ public class StudentControllerTest {
             this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
             MvcResult result = mockMvc.perform(get("/api/load_schedule")
                     .session((MockHttpSession) session)
-                    .param("type","not a number"))
+                    .param("type", "not a number"))
                     .andExpect(status().isOk())
                     .andReturn();
 
             Assert.assertEquals(logger.getLevel(), Level.ERROR);
 
             String response = result.getResponse().getContentAsString();
-            Assert.assertEquals(response,"");
+            Assert.assertEquals(response, "");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +73,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void createScheduleTypeANumberTest(){
+    public void createScheduleTypeANumberTest() {
         try {
             this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
             HttpSession session = mockMvc.perform(post("/login")
@@ -92,17 +89,169 @@ public class StudentControllerTest {
             this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
             MvcResult result = mockMvc.perform(get("/api/load_schedule")
                     .session((MockHttpSession) session)
-                    .param("type","1"))
+                    .param("type", "1"))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("application/json;charset=UTF-8"))
                     .andReturn();
 
 
             String response = result.getResponse().getContentAsString();
-            Assert.assertNotEquals(response,"");
+            Assert.assertNotEquals(response, "");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+    @Test
+    public void enroll() {
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "student1")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("student"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
+            MvcResult result = mockMvc.perform(get("/api/enroll")
+                    .session((MockHttpSession) session)
+                    .param("courseId", "1"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals(response, "Enroll successful!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void enrollNotHaveCourse() {
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "student1")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("student"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
+            MvcResult result = mockMvc.perform(get("/api/enroll")
+                    .session((MockHttpSession) session)
+                    .param("courseId", "100"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals(response, "Not exists course");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void enrollUserHaveNoMail() {
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "student2")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("student"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
+            MvcResult result = mockMvc.perform(get("/api/enroll")
+                    .session((MockHttpSession) session)
+                    .param("courseId", "1"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals(response, "Enroll successful! but can't send mail for student");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void enrollTeacherHaveNoMail() {
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "student1")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("student"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
+            MvcResult result = mockMvc.perform(get("/api/enroll")
+                    .session((MockHttpSession) session)
+                    .param("courseId", "2"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals("Enroll successful! but can't send mail for teacher", response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void enrolled() {
+        try {
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
+            HttpSession session = mockMvc.perform(post("/login")
+                    .param("username", "student1")
+                    .param("password", "123456"))
+                    .andExpect(redirectedUrl("student"))
+                    .andReturn()
+                    .getRequest()
+                    .getSession();
+
+            Assert.assertNotNull(session);
+
+            this.mockMvc = MockMvcBuilders.standaloneSetup(this.studentController).build();
+            MvcResult result = mockMvc.perform(get("/api/enroll")
+                    .session((MockHttpSession) session)
+                    .param("courseId", "6"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andReturn();
+
+
+            String response = result.getResponse().getContentAsString();
+            Assert.assertEquals("you enrolled", response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
