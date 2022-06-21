@@ -19,7 +19,7 @@
         <spring.version>5.2.3.RELEASE</spring.version>
         <hibernate.version>5.4.1.Final</hibernate.version>
         <jstl.version>1.2</jstl.version>
-        <mysql.version>8.0.13</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <jspapi.version>4.0.1</jspapi.version>
         <validationapi.version>2.0.1.Final</validationapi.version>
         <commons.version>1.4</commons.version>
