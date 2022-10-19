@@ -24,7 +24,7 @@
         <validationapi.version>2.0.1.Final</validationapi.version>
         <commons.version>1.4</commons.version>
         <mail.version>1.4.7</mail.version>
-        <jackson.version>2.10.0</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
     </properties>
 
     <dependencies>
